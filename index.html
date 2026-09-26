@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LMR Vendor Directory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --stone:#E5E8E1; --paper:#FBFCFA; --ink:#141F1D; --body:#3A4442; --mute:#6E7873;
+  --line:#CDD3CB; --line-soft:#E1E5DE;
+  --cedar:#2F6F5E; --amber:#A9711A; --rust:#93392E; --slate:#5A6672;
+  --tint-c:rgba(47,111,94,.13); --tint-c2:rgba(47,111,94,.09);
+  --tint-a:rgba(169,113,26,.15); --tint-r:rgba(147,57,46,.13); --tint-s:rgba(90,102,114,.12);
+  --mark:rgba(169,113,26,.24);
+  --r:10px;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --stone:#131817; --paper:#1B2221; --ink:#EDF0EC; --body:#B6BFBB; --mute:#7E8A85;
+    --line:#2E3836; --line-soft:#252E2C;
+    --cedar:#6FBFA5; --amber:#D8A24A; --rust:#D97D6B; --slate:#94A3AE;
+    --tint-c:rgba(111,191,165,.16); --tint-c2:rgba(111,191,165,.10);
+    --tint-a:rgba(216,162,74,.16); --tint-r:rgba(217,125,107,.15); --tint-s:rgba(148,163,174,.14);
+    --mark:rgba(216,162,74,.28);
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--stone); color:var(--body);
+  font-family:"Instrument Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:15px; line-height:1.5;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 18px 72px}
+
+/* ---------- masthead ---------- */
+.mast{padding:38px 0 22px}
+.eyebrow{
+  font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--mute); margin:0 0 10px
+}
+h1{
+  font-family:"Bricolage Grotesque","Instrument Sans",sans-serif;
+  font-weight:800; font-size:clamp(30px,6.2vw,52px); line-height:1.02;
+  letter-spacing:-.025em; color:var(--ink); margin:0 0 14px; max-width:15ch;
+}
+.lede{max-width:60ch;margin:0 0 18px;color:var(--body)}
+.facts{
+  display:flex; flex-wrap:wrap; gap:6px 22px; padding-top:16px;
+  border-top:1px solid var(--line);
+  font-family:"JetBrains Mono",monospace; font-size:11.5px; color:var(--mute)
+}
+.facts b{color:var(--ink);font-weight:600}
+
+/* ---------- controls ---------- */
+.controls{
+  position:sticky; top:0; z-index:20; background:var(--stone);
+  padding:14px 0 12px; border-bottom:1px solid var(--line); margin-bottom:4px;
+}
+.searchrow{display:flex;gap:8px;margin-bottom:10px}
+.searchbox{position:relative;flex:1}
+.searchbox svg{
+  position:absolute;left:13px;top:50%;transform:translateY(-50%);
+  width:16px;height:16px;stroke:var(--mute);fill:none;stroke-width:2;pointer-events:none
+}
+#q{
+  width:100%; padding:12px 40px 12px 38px; font:inherit; font-size:16px;
+  color:var(--ink); background:var(--paper);
+  border:1px solid var(--line); border-radius:var(--r);
+}
+#q::placeholder{color:var(--mute)}
+#q:focus{outline:2px solid var(--cedar);outline-offset:1px;border-color:transparent}
+#clear{
+  position:absolute;right:6px;top:50%;transform:translateY(-50%);
+  border:0;background:none;cursor:pointer;padding:8px;line-height:0;
+  color:var(--mute);border-radius:6px;display:none
+}
+#clear.on{display:block}
+#clear:hover{color:var(--ink);background:var(--line-soft)}
+#clear svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2}
+
+.selects{display:flex;gap:8px;flex-wrap:wrap}
+select{
+  font:inherit;font-size:14px;color:var(--ink);background:var(--paper);
+  border:1px solid var(--line);border-radius:var(--r);padding:9px 30px 9px 11px;
+  cursor:pointer;appearance:none;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><path d='M3 4.5 6 8l3-3.5' fill='none' stroke='%236E7873' stroke-width='1.5' stroke-linecap='round'/></svg>");
+  background-repeat:no-repeat;background-position:right 9px center;background-size:12px
+}
+select:focus{outline:2px solid var(--cedar);outline-offset:1px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.chip{
+  font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.04em;
+  padding:6px 11px;border-radius:999px;border:1px solid var(--line);
+  background:transparent;color:var(--mute);cursor:pointer
+}
+.chip:hover{border-color:var(--mute);color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--stone)}
+.chiprow{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;margin-top:10px}
+.sep{width:1px;height:18px;background:var(--line)}
+.chip.toggle[aria-pressed="true"]{background:var(--tint-a);border-color:var(--amber);color:var(--amber)}
+.chip.toggle::before{content:"¹5";margin-right:6px;font-size:9px;opacity:.6}
+.chip.toggle[aria-pressed="true"]::before{opacity:1}
+.hiddennote{
+  font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--amber);
+  margin:10px 0 0;padding-top:9px;border-top:1px solid var(--line-soft)
+}
+.chip:focus-visible{outline:2px solid var(--cedar);outline-offset:2px}
+
+.count{
+  font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--mute);
+  padding:14px 2px 8px;display:flex;justify-content:space-between;gap:12px;align-items:baseline
+}
+#reset{
+  border:0;background:none;padding:0;font:inherit;font-size:11.5px;
+  color:var(--cedar);cursor:pointer;text-decoration:underline;text-underline-offset:3px;display:none
+}
+#reset.on{display:inline}
+
+/* ---------- rows ---------- */
+.rows{display:flex;flex-direction:column;gap:8px}
+.row{
+  background:var(--paper);border:1px solid var(--line-soft);border-radius:var(--r);
+  padding:15px 16px;display:grid;gap:10px 18px;
+  grid-template-columns:1fr; align-items:start
+}
+.row:hover{border-color:var(--line)}
+.main{min-width:0}
+.trade{
+  font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--mute);display:block;margin-bottom:3px
+}
+.name{
+  font-family:"Bricolage Grotesque","Instrument Sans",sans-serif;font-weight:700;
+  font-size:18px;letter-spacing:-.012em;color:var(--ink);line-height:1.2;margin:0 0 5px
+}
+.contact{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--mute);word-break:break-word}
+.contact a{color:var(--cedar);text-decoration:none;border-bottom:1px solid var(--tint-c)}
+.contact a:hover{border-bottom-color:var(--cedar)}
+.note{margin:9px 0 0;font-size:14px;line-height:1.55;color:var(--body)}
+
+/* signature: tally meter — one stroke per household that vouched */
+.meter{display:flex;flex-direction:column;gap:6px}
+.tally{display:flex;align-items:flex-end;gap:3px;height:20px}
+.tally i{width:3px;border-radius:2px;background:var(--cedar);display:block}
+.tally i:nth-child(1){height:11px}
+.tally i:nth-child(2){height:14px}
+.tally i:nth-child(3){height:17px}
+.tally i:nth-child(4){height:20px}
+.tally i:nth-child(n+5){height:20px}
+.tally.sent-mixed i{background:var(--amber)}
+.tally.sent-negative i{background:var(--rust)}
+.tally.sent-neutral i{background:var(--slate)}
+.metric{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--mute);white-space:nowrap}
+.metric b{color:var(--ink);font-weight:600}
+.tag{
+  font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.05em;
+  display:inline-block;padding:3px 8px;border-radius:5px;white-space:nowrap
+}
+.sent-strongly.tag{background:var(--tint-c);color:var(--cedar)}
+.sent-positive.tag{background:var(--tint-c2);color:var(--cedar)}
+.sent-mixed.tag{background:var(--tint-a);color:var(--amber)}
+.sent-negative.tag{background:var(--tint-r);color:var(--rust)}
+.sent-neutral.tag{background:var(--tint-s);color:var(--slate)}
+.seen{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--mute)}
+
+/* who-said-it trigger + popover */
+.who{
+  font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--mute);
+  background:none;border:0;padding:0;cursor:pointer;text-align:inherit;
+  border-bottom:1px dashed var(--line);white-space:nowrap
+}
+.who b{color:var(--ink);font-weight:600}
+.who:hover,.who[aria-expanded="true"]{color:var(--ink);border-bottom-color:var(--cedar)}
+.who:focus-visible{outline:2px solid var(--cedar);outline-offset:3px;border-radius:3px}
+.who span{color:var(--cedar);margin-left:4px}
+
+#pop{
+  position:fixed;z-index:60;max-width:min(440px,calc(100vw - 24px));
+  background:var(--paper);border:1px solid var(--line);border-radius:12px;
+  box-shadow:0 10px 34px rgba(0,0,0,.16),0 2px 6px rgba(0,0,0,.07);
+  padding:14px 15px;display:none
+}
+#pop.on{display:block}
+#pop h3{
+  font-family:"Bricolage Grotesque","Instrument Sans",sans-serif;font-size:14px;
+  font-weight:700;color:var(--ink);margin:0 0 3px;letter-spacing:-.01em
+}
+#pop .pmeta{
+  font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--mute);margin:0 0 11px;
+  padding-bottom:9px;border-bottom:1px solid var(--line-soft)
+}
+#pop ul{list-style:none;margin:0;padding:0;max-height:min(58vh,400px);overflow-y:auto}
+#pop li{padding:9px 0;border-bottom:1px solid var(--line-soft)}
+#pop li:last-child{border-bottom:0;padding-bottom:0}
+#pop li:first-child{padding-top:0}
+.pwho{display:flex;justify-content:space-between;gap:10px;align-items:baseline;margin-bottom:3px}
+.pname{font-weight:600;font-size:13.5px;color:var(--ink)}
+.pdate{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--mute);white-space:nowrap}
+.pquote{font-size:13px;line-height:1.5;color:var(--body);margin:0}
+.pnone{font-size:13px;color:var(--mute);margin:0}
+
+mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
+
+.empty{
+  background:var(--paper);border:1px dashed var(--line);border-radius:var(--r);
+  padding:44px 24px;text-align:center
+}
+.empty p{margin:0 0 6px;color:var(--ink);font-weight:600}
+.empty span{font-size:14px;color:var(--mute)}
+
+footer{
+  margin-top:36px;padding-top:18px;border-top:1px solid var(--line);
+  font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--mute);line-height:1.7
+}
+
+@media(min-width:720px){
+  .row{grid-template-columns:1fr 132px 128px;padding:17px 20px}
+  .meter{align-items:flex-start}
+  .aside{text-align:right;display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+}
+/* seasonality histogram */
+.chart{
+  background:var(--paper);border:1px solid var(--line-soft);border-radius:var(--r);
+  padding:15px 16px 12px;margin:2px 0 14px
+}
+.chead{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:baseline;justify-content:space-between;margin-bottom:14px}
+.ctitle{
+  font-family:"Bricolage Grotesque","Instrument Sans",sans-serif;font-weight:700;
+  font-size:15px;color:var(--ink);margin:0;letter-spacing:-.01em
+}
+.ctitle em{font-style:normal;color:var(--cedar)}
+.cmode{display:flex;gap:4px}
+.cmode button{
+  font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.04em;
+  padding:5px 9px;border-radius:6px;border:1px solid var(--line);
+  background:transparent;color:var(--mute);cursor:pointer
+}
+.cmode button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--stone)}
+.cmode button:focus-visible{outline:2px solid var(--cedar);outline-offset:2px}
+.bars{display:flex;align-items:flex-end;gap:clamp(3px,1.2vw,9px);height:120px;margin-bottom:7px}
+.bcol{flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;position:relative;cursor:default}
+.bfill{
+  width:100%;background:var(--cedar);border-radius:3px 3px 0 0;min-height:2px;
+  position:relative;opacity:.88
+}
+.bcol:hover .bfill{opacity:1}
+.bbase{
+  position:absolute;left:0;right:0;bottom:0;border-top:1.5px dashed var(--line);
+  pointer-events:none
+}
+.bval{
+  position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);
+  font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--ink);
+  background:var(--paper);padding:1px 4px;border-radius:4px;border:1px solid var(--line);
+  opacity:0;pointer-events:none;white-space:nowrap;z-index:5
+}
+.bcol:hover .bval{opacity:1}
+.bcol.peak .bfill{background:var(--amber)}
+.months{display:flex;gap:clamp(3px,1.2vw,9px)}
+.months span{
+  flex:1;text-align:center;font-family:"JetBrains Mono",monospace;
+  font-size:9.5px;color:var(--mute);letter-spacing:.02em
+}
+.months span.peak{color:var(--amber);font-weight:600}
+.cnote{
+  font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--mute);
+  margin:10px 0 0;padding-top:9px;border-top:1px solid var(--line-soft);line-height:1.6
+}
+
+/* live breakdown strip — rebuilds itself from whatever is on screen */
+.breakdown{display:flex;flex-direction:column;gap:7px;padding:2px 2px 14px}
+.bdbar{display:flex;width:100%;height:7px;border-radius:99px;overflow:hidden;background:var(--line-soft)}
+.bdbar span{display:block;height:100%}
+.bdkey{display:flex;flex-wrap:wrap;gap:4px 14px;font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--mute)}
+.bdkey b{color:var(--ink);font-weight:600}
+.bdkey i{display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:5px;font-style:normal}
+
+@media(prefers-reduced-motion:no-preference){
+  .row{transition:border-color .14s ease,transform .14s ease}
+  .row:hover{transform:translateY(-1px)}
+  .chip{transition:background .14s ease,color .14s ease,border-color .14s ease}
+  .bdbar span{transition:width .4s cubic-bezier(.4,0,.2,1)}
+  .tally i{animation:grow .4s cubic-bezier(.2,.8,.3,1) backwards}
+  .tally i:nth-child(2){animation-delay:.03s}
+  .tally i:nth-child(3){animation-delay:.06s}
+  .tally i:nth-child(4){animation-delay:.09s}
+  .tally i:nth-child(n+5){animation-delay:.12s}
+  .row{animation:rise .3s ease backwards}
+  @keyframes grow{from{height:0 !important;opacity:0}}
+  @keyframes rise{from{opacity:0;transform:translateY(5px)}}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <p class="eyebrow">Lewis Mountain Ranch &middot; Austin, TX</p>
+  <h1>Who the neighbors actually call</h1>
+  <p class="lede">Every trade recommendation posted to the LMR group chat, pulled out and counted. Tally marks show how many <em>separate</em> households vouched for each name &mdash; one enthusiast repeating themselves isn't consensus.</p>
+  <div class="facts">
+    <span><b>151</b> vendors</span>
+    <span><b>31</b> trades</span>
+    <span><b>292</b> recommendations</span>
+    <span><b>7,048</b> messages</span>
+    <span><b>Mar 2020 &ndash; Aug 2026</b></span>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="searchrow">
+    <div class="searchbox">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5" stroke-linecap="round"/></svg>
+      <input id="q" type="search" placeholder="Search a name, trade, or phrase &mdash; try &ldquo;honest&rdquo;" autocomplete="off" aria-label="Search vendors">
+      <button id="clear" type="button" aria-label="Clear search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="selects">
+    <select id="trade" aria-label="Filter by trade"><option value="">All trades</option></select>
+    <select id="sort" aria-label="Sort results">
+      <option value="r">Most households</option>
+      <option value="m">Most mentions</option>
+      <option value="l">Most recent</option>
+      <option value="v">Name A&ndash;Z</option>
+      <option value="t">Trade A&ndash;Z</option>
+    </select>
+  </div>
+  <div class="chips chiprow" role="group" aria-label="Filter results">
+    <button class="chip" type="button" data-s="Strongly positive" aria-pressed="false">Strongly positive</button>
+    <button class="chip" type="button" data-s="Positive" aria-pressed="false">Positive</button>
+    <button class="chip" type="button" data-s="Mixed" aria-pressed="false">Mixed</button>
+    <button class="chip" type="button" data-s="Negative" aria-pressed="false">Negative</button>
+    <span class="sep" aria-hidden="true"></span>
+    <button class="chip toggle" id="deanfilter" type="button" aria-pressed="false"
+      title="Hides jokes, puns and non-answers from the message lists. Mostly Dean.">Dean Filter</button>
+  </div>
+</div>
+
+<div class="count">
+  <span id="count" aria-live="polite"></span>
+  <button id="reset" type="button">Reset filters</button>
+</div>
+
+<section class="chart" id="chart" aria-label="Seasonal activity">
+  <div class="chead">
+    <h2 class="ctitle" id="ctitle"></h2>
+    <div class="cmode" role="group" aria-label="Chart scale">
+      <button type="button" id="mNorm" aria-pressed="true">Per 1,000 msgs</button>
+      <button type="button" id="mRaw" aria-pressed="false">Raw count</button>
+    </div>
+  </div>
+  <div class="bars" id="bars"></div>
+  <div class="months" id="months"></div>
+  <p class="cnote" id="cnote"></p>
+</section>
+
+<div class="breakdown" id="breakdown" aria-hidden="true"></div>
+<div class="rows" id="rows"></div>
+
+<div id="pop" role="dialog" aria-label="Who recommended this"></div>
+
+<footer>
+  Built from a WhatsApp export of the LMR Communicates group.<br>
+  Counts reflect what neighbors posted, not independent verification &mdash; always get your own quote.
+</footer>
+
+</div>
+
+<script>
+const DATA = [{"t":"Propane","v":"Action Propane","c":"","tel":"","m":11,"r":9,"s":"Strongly positive","f":"Feb 2021","l":"Jul 2026","ls":202607,"sr":4,"n":"The neighborhood default, going back decades. Deborah V-D: 25 years, 'incredibly reliable... I can't say enough good things.' Brandie: ~30 years, autofill, never run out. Also does new tank installs.","w":[{"who":"Miranda","when":"2/18/21","q":"We got through to action propane and they laughed at us. Telling us they can’t get trucks out here and no idea when, unless we have 1500 to pay for a to…","j":0},{"who":"Miranda","when":"2/20/21","q":"I just stopped action propane and asked them if they were gonna be coming back. He has a full load his hitting houses right now he’s on the Plata Loop. …","j":0},{"who":"Heather Swanson","when":"2/20/21","q":"This is Action propane, i took Elaine’s advice and messaged them over Facebook and that seemed to work. I have had no luck calling and emailing so whate…","j":0},{"who":"Nicole","when":"12/12/23","q":"We use Action Propane","j":0},{"who":"Rob Pelt","when":"10/28/24","q":"We use Action Propane.","j":0},{"who":"Connie Booth","when":"10/28/24","q":"We use Action Propane","j":0},{"who":"Nicole","when":"10/28/24","q":"We also use Action Propane.","j":0},{"who":"Valerie","when":"6/28/25","q":"We used action propane for our initial install","j":0},{"who":"Brandie","when":"7/29/26","q":"We have Action propane and are on auto fill. I'm not sure how it works but we have never run out. We came close during our 5 day freeze event but they c…","j":0},{"who":"Miranda","when":"7/29/26","q":"We have action propane as well and are on their route. We have run out a few times when we first moved here, but have not had any problems since. Best t…","j":0},{"who":"Dean Dzurilla","when":"12/12/23","q":"I Got Gas is my wife’s favorite.","j":1}],"i":0},{"t":"Internet","v":"Spectrum","c":"","tel":"","m":6,"r":6,"s":"Mixed","f":"Aug 2022","l":"Jun 2026","ls":202606,"sr":2,"n":"The only real wired option and a recurring gripe. Download is fine (up to ~1 Gbps) but upload caps around 20-30 Mbps, a problem for WFH. No Google Fiber - neighborhood not dense enough. Starlink tested slower than Spectrum. AT&T Air used as failover.","w":[{"who":"Brandie","when":"1/2/22","q":"Any one else having internet issues, specifically with Spectrum? I can't even log into the Spectrum app.","j":0},{"who":"Merritt","when":"7/2/24","q":"Same service providers as you. Cost I’m not sure. One option for spectrum outages is to add cellular backup to your wifi network. “Unifi network hardwar…","j":0},{"who":"Rob Pelt","when":"4/4/25","q":"Likely dark fiber for the cell towers. They need to improve the backhaul to compete with Spectrum for home internet.","j":0},{"who":"Micah","when":"3/17/26","q":"I can confirm that the Spectrum wireless Router they give you has horrible WiFi signal. It might be an issue with your WiFi coverage throughout your home.","j":0},{"who":"Scott Jensen","when":"4/27/26","q":"My spectrum WiFi zoom calls this am were very shaky all morning.","j":0},{"who":"Dustin","when":"6/13/26","q":"Spectrum is ok download but horrible upload… I have 1gbps down but only 30mbps upload… it can go down occasionally so I have the att air as a failover s…","j":0}],"i":1},{"t":"Handyman","v":"Brad Boyd","c":"+1 (512) 552-5988","tel":"+15125525988","m":9,"r":5,"s":"Strongly positive","f":"Aug 2025","l":"Aug 2026","ls":202608,"sr":4,"n":"THE strongest consensus in the entire chat. Kristina (6 rental properties): 'always my first call.' Scott J: 'carpentry is his forte... very reasonable.' Dean: 'legit, nice, capable, and very fair.' Neil P concurs. Will tell you if a job is outside his comfort zone.","w":[{"who":"Kristina","when":"8/8/25","q":"Someone was asking for a handyman the other day. Brad Boyd is wonderful. He’s a carpenter by trade but can do many things and will tell you if he isn’t …","j":0},{"who":"Dean Dzurilla","when":"11/8/25","q":"@⁨~Scott Jensen⁩ - thanks so much for the plumbing recommendation. Brad Boyd is great. Turns out he does a lot more than plumbing work too. He's a handy…","j":0},{"who":"Dean Dzurilla","when":"1/17/26","q":"Hi LMR. Handyman Brad will be doing work in our hood this upcoming week. He’s the gentleman that Scott introduced me to recently. He’s a very nice man t…","j":0},{"who":"Scott Jensen","when":"4/29/26","q":"Brad Boyd has done a lot of stuff in my house and is very reasonable. Others in the hood as well. Carpentry is his forte. (512) 552-5988","j":0},{"who":"Dean Dzurilla","when":"4/29/26","q":"Scott’s right. I second Brad. He’s legit, nice, capable, and very fair with his pricing. You won’t go wrong with him Randy.","j":0},{"who":"Scott Jensen","when":"7/2/26","q":"And… Brad Boyd the handy man is pretty good at this kind of stuff.","j":0},{"who":"Dean Dzurilla","when":"8/6/26","q":"Brad Boyd Handyman to the Stars 512-552-5988","j":0},{"who":"Ryan Z","when":"8/8/25","q":"Clearly there is since our phones are all in SOS status right now 😂","j":1}],"i":2},{"t":"Propane","v":"Direct Propane","c":"1-800-696-3493 / (512) 276-7800","tel":"+18006963493","m":9,"r":5,"s":"Strongly positive","f":"Feb 2021","l":"Feb 2026","ls":202602,"sr":4,"n":"The other clear favorite. Susan Thiel: autofill 'has never run low.' Scott Jensen: 'I think Direct Propane is awesome.' Susan P found them cheapest when she shopped around.","w":[{"who":"Susan Thiel","when":"2/5/22","q":"I’m sorry to hear it Shelby. We use Direct Propane and have never been without gas. We’re on their auto fill program. 1 (800) 696-3493","j":0},{"who":"Sabina","when":"2/5/22","q":"We used Direct Propane.","j":0},{"who":"Scott Jensen","when":"12/12/23","q":"Direct Propane for us. (512) 276-7800. Pinnacle is always more expensive. Always.","j":0},{"who":"Craigo Plackis","when":"10/28/24","q":"We use Direct propane.","j":0},{"who":"Scott Jensen","when":"2/3/26","q":"I think Direct Propane is awesome. (512) 276-7800","j":0},{"who":"Dean Dzurilla","when":"12/12/23","q":"I Got Gas is my wife’s favorite.","j":1}],"i":3},{"t":"Plumbing","v":"Ross Plumbing","c":"(512) 698-8578","tel":"+15126988578","m":7,"r":5,"s":"Strongly positive","f":"Nov 2024","l":"Sep 2025","ls":202509,"sr":4,"n":"Strongest plumbing consensus. Susan P, Leslie F, Jason S, Retta all endorse. Dean: 'TWO VERY BIG THUMBS UP' - tech Leroy inspected, cut into wall, charged nothing.","w":[{"who":"Susan Phillips","when":"11/5/24","q":"Also Ross Plumbing (512) 698-8578","j":0},{"who":"Jason Schneider","when":"11/5/24","q":"3rd recommendation for Ross Plumbing","j":0},{"who":"Dean Dzurilla","when":"11/7/24","q":"Thanks for the all plumber recommendations. TWO VERY BIG THUMBS UP for Ross Plumbing. Leroy was just by the house. Super pleasant gentleman. He inspecte…","j":0},{"who":"Retta","when":"2/28/25","q":"Just used Ross Plumbing and am very pleased! Thanks to everyone for the referral! Will definitely use them again.","j":0}],"i":4},{"t":"Roofing","v":"Wilson Roofing","c":"","tel":"","m":7,"r":5,"s":"Positive","f":"Feb 2023","l":"Jan 2026","ls":202601,"sr":3,"n":"The long-standing default. Scott J: 'always been fair to me and done good work... stood by any issues.' Caveat: harder to reach during an apparent ownership transition around 2022-23.","w":[{"who":"Nicole","when":"2/1/23","q":"I think we used Wilson Roofing for repairs","j":0},{"who":"Deborah Vollmer Dahlke","when":"2/1/23","q":"Wilson roofing did our roof repair last ice storm and referral us to a good repair person. We can look it up later you could call Wilson","j":0},{"who":"Deborah Vollmer Dahlke","when":"2/2/23","q":"We couldn’t find the gutter company. Best bet is to call Wilson roofing and ask. We also used “Austin Gutter Man” a few times. Good luck!","j":0},{"who":"Nicole","when":"9/15/23","q":"Wilson Roofing is who we actually used, I believe.","j":0},{"who":"Scott Jensen","when":"9/15/23","q":"Wilson roofing has always been fair to me and done good work. Las time I need a few facia repairs done about 1.5 years ago I. The pandemic, they seemed …","j":0},{"who":"Scott Jensen","when":"1/5/26","q":"I had a good experience with Wilson roofing 3-4 yrs ago. Nowadays, good means they communicated accurately, arrived on time, seemed to k teeth they were…","j":0}],"i":5},{"t":"Roofing","v":"Driftwood Builders Roofing (Nick/Nock)","c":"512-894-0129 / 512-807-0001","tel":"+15128940129","m":6,"r":5,"s":"Strongly positive","f":"Sep 2023","l":"Jun 2026","ls":202606,"sr":4,"n":"Now the momentum pick, especially for emergencies. Craigo, Emily Dorch, Ian, Tina H all endorse. Owner Todd well regarded.","w":[{"who":"Jon Dorch","when":"9/15/23","q":"Driftwood Builders Roofing 512.894.0129 I haven’t needed roofing work so no first hand experience with them. I do know the owner Todd and he is a super …","j":0},{"who":"Craigo Plackis","when":"1/5/26","q":"Great experience with Driftwood builders roofing.","j":0},{"who":"Emily Dorch","when":"1/26/26","q":"Try Driftwood Roofing- 512.894.0129.","j":0},{"who":"Ian","when":"6/9/26","q":"We had a good experience with Nick at Driftwood Builders Roofing (512) 807-0001 (office is 512-894-0129).","j":0},{"who":"Susan Phillips","when":"9/15/23","q":"Haha. He came to our house earlier today. I think they’re just opportunist after hearing about the hail in our neighborhood!","j":1}],"i":6},{"t":"Pool","v":"Outdoor Jack","c":"(737) 510-4477 / 512-222-9331","tel":"+17375104477","m":6,"r":5,"s":"Mixed","f":"Mar 2025","l":"Jun 2026","ls":202606,"sr":2,"n":"Neighbor-owned (Dean/Matt/Cortney), disclosed as self-interested. Does pools, yards, and windows. Susan Thiel raved about 22 ft windows; Susan P happy with mowing. But Micah (Jun 2026): no response for a week, yard skipped 4 weeks.","w":[{"who":"Dean Dzurilla","when":"3/2/25","q":"Matthew - I hear the OutdoorJack guys are a pretty good. I’ll privately introduce you to Matt. They also do windows and pools.","j":0},{"who":"Susan Thiel","when":"10/2/25","q":"Outdoor Jack did an amazing job cleaning our windows. They even got the tall windows at 22’ <attached: 00005409-PHOTO-2025-10-02-16-41-31.jpg>","j":0},{"who":"Dean Dzurilla","when":"6/17/26","q":"We have used OutdoorJack for window cleaning and have been happy with them.","j":0}],"i":7},{"t":"HVAC","v":"Service Wizard","c":"","tel":"","m":6,"r":5,"s":"Strongly positive","f":"Oct 2024","l":"Jun 2026","ls":202606,"sr":4,"n":"Clear category leader. Full system replacements for Ute E and Ian; Jodi on their maintenance plan 'respond very quickly.' Ian: responsive, reasonably priced, won on 3 bids.","w":[{"who":"Ute Ewe","when":"1/29/26","q":"We replaced our HVAC with Service Wizard. We're very happy with them.","j":0}],"i":8},{"t":"Landscape & Irrigation","v":"Pentecost Sprinklers","c":"(512) 280-9344","tel":"+15122809344","m":5,"r":5,"s":"Strongly positive","f":"Mar 2023","l":"Aug 2026","ls":202608,"sr":4,"n":"Most-endorsed irrigation outfit. Scott J's checklist: arrived when they said, quoted reasonably, repair has lasted 3 years. Priya: 9 years of service, 'not cheap but honest.' Dean notes prices have risen.","w":[{"who":"Craigo Plackis","when":"3/30/23","q":"Pentecost sprinklers. 512-280-9344","j":0},{"who":"Scott Jensen","when":"8/21/26","q":"Pentecost sprinklers did and incredibly honest and reasonable job with my issues. (512) 280-9344 1) Stated a time to arrive and did so 2) nice people sh…","j":0},{"who":"Priya R","when":"8/21/26","q":"I second Pentecost. They’ve been my sprinkler installers, repair, back flow testing etc for 9y now. And yes, they’re not cheap but honest. <This message…","j":0}],"i":9},{"t":"Appliance Repair","v":"Appliance Express","c":"512-819-0670","tel":"+15128190670","m":6,"r":4,"s":"Strongly positive","f":"Jun 2024","l":"Jan 2026","ls":202601,"sr":4,"n":"Near-universal default - Nicole, Roxy, Craigo all name it unprompted. One caveat from Scott Jensen (Jun 2024): 'Backed up 2-3 wks on warranty calls.'","w":[{"who":"Nicole","when":"6/14/24","q":"We use have used Appliance Express 512-819-0670","j":0},{"who":"Nicole","when":"12/11/24","q":"Appliance Express 512-819-0670","j":0},{"who":"Roxy","when":"4/29/25","q":"Sorry to hear. We use appliance express","j":0},{"who":"Roxy","when":"10/27/25","q":"Appliance express 512-819-0670 <This message was edited>","j":0},{"who":"Craigo Plackis","when":"1/29/26","q":"We use these guys. +1 (512) 819-0670. Appliance express","j":0}],"i":10},{"t":"Garage Doors","v":"Cedar Park Overhead / Garage Doors","c":"","tel":"","m":5,"r":4,"s":"Strongly positive","f":"Sep 2023","l":"Jan 2026","ls":202601,"sr":4,"n":"Unanimous. Dean: 'prompt, courteous, and priced fairly.' Retta, Nicole and Scott J all confirm. Spring replacement is the common job.","w":[{"who":"Dean Dzurilla","when":"9/15/23","q":"We've used Cedar Park Garage Doors for repair and replace work. They were prompt, courteous, and priced fairly","j":0},{"who":"Hector Elizondo","when":"9/15/23","q":"I also used Cedar Park Garage Doors and would use again.","j":0}],"i":11},{"t":"Plumbing","v":"Abel To Plumb (Abel)","c":"512-995-4010 / 512-995-1745","tel":"+15129954010","m":4,"r":4,"s":"Strongly positive","f":"Feb 2026","l":"Jun 2026","ls":202606,"sr":4,"n":"Newest favorite, rising fast. Susan Thiel: found a propane leak two other plumbers missed. Natasha: 'phenomenal.' Works with Retta's contractor.","w":[{"who":"Retta","when":"2/25/26","q":"We really like the plumber we used for a leak under our tub recently. He works for our contractor. His name is Abel. His company is Abel To Plumb. 512-9…","j":0},{"who":"Susan Thiel","when":"2/26/26","q":"Abel did some work for us and found a propane leek in our house when 2 other plumbers did not. Abel is clever as well as a gentleman. I highly recommend…","j":0},{"who":"Retta","when":"6/16/26","q":"We have a great plumber. His name is Abel. Company name Abel To Plumb. 512-995-4010.","j":0}],"i":12},{"t":"Dryer Vent & Ducts","v":"Fireman Dryerman","c":"512-731-5299 / brett@firemandryerman.com","tel":"+15127315299","m":4,"r":4,"s":"Strongly positive","f":"Apr 2025","l":"Apr 2025","ls":202504,"sr":4,"n":"Susan Thiel's report is the most detailed: 'Nick was very thorough and cleaned up afterward,' found a bird's nest in the vent. Susan P and Valerie also endorse.","w":[{"who":"Susan Thiel","when":"4/8/25","q":"I had Fireman Dryerman come out today and they did a stellar job! Nick was very thorough and cleaned up afterward. We found a birds nest build inside th…","j":0}],"i":13},{"t":"Window Cleaning","v":"Gwyndows","c":"","tel":"","m":3,"r":3,"s":"Strongly positive","f":"Aug 2023","l":"Aug 2023","ls":202308,"sr":4,"n":"Three neighbors piled on within minutes - Deborah, Jacqueline ('good work and great customer service'), Rob Pelt.","w":[],"i":14},{"t":"Pool","v":"Jose Tivejo / Swimtex Pool Services","c":"512-545-5285 / 678-538-8414","tel":"+15125455285","m":3,"r":3,"s":"Mixed","f":"Aug 2022","l":"Aug 2023","ls":202308,"sr":2,"n":"Miranda: $185/mo full weekly. Kristina: $238.15/mo, 'using him for years.' But Dean: 'I'm not a fan of Jose. You will do better.'","w":[{"who":"Miranda","when":"8/16/22","q":"512-545-5285 swimtex pool services is the new company. Tell them the ippolito family referred you!","j":0},{"who":"Kristina","when":"8/21/23","q":"I like my guy. Jose Tivejo. We pay $238.15 a month for weekly cleaning including chemicals. We’ve been using him for years.","j":0}],"i":15},{"t":"Glass & Windows","v":"Jose Vera - Windows","c":"+1 (512) 804-8535","tel":"+15128048535","m":3,"r":3,"s":"Strongly positive","f":"Apr 2026","l":"Apr 2026","ls":202604,"sr":4,"n":"Jim Stadler did his own years ago, then referred him to three other houses in the neighborhood. Richie: 'I second Jim - Jose is great!' Suzanne also pleased.","w":[{"who":"Jim Stadler","when":"4/4/26","q":"You're welcome to come see our widows, Retta. Not by Anderson, but by Jose 🙂 After he did ours years ago, I recommended him to some friends on this side…","j":0}],"i":16},{"t":"Pool","v":"ABC Home & Commercial Services","c":"","tel":"","m":4,"r":2,"s":"Positive","f":"Aug 2022","l":"Aug 2023","ls":202308,"sr":3,"n":"Ryan Z, the most detailed data point in the chat: $285/mo weekly service including chemicals, consistent day each week, bundles with lawn/pest/HVAC. Several LMR households use them. Can be slow to take new clients.","w":[{"who":"Susan Thiel","when":"8/16/22","q":"Good to know about ABC. We use a service that costs. $300/ mo, which seems expensive, but maybe that’s the going rate for pool service?","j":0},{"who":"Ryan Z","when":"8/16/22","q":"So they are struggling with taking on new clients especially if it’s your neighbor as we experienced recently but they finally had an opening for adding…","j":0},{"who":"Ryan Z","when":"8/21/23","q":"I know several of us utilize ABC for pool cleaning. We have used them for several years. They come to the neighborhood on Thursdays usually. We pay $285…","j":0}],"i":17},{"t":"Propane","v":"Ferrellgas (formerly Sharp)","c":"","tel":"","m":4,"r":2,"s":"Mixed","f":"Feb 2021","l":"Jul 2026","ls":202607,"sr":2,"n":"Shelby W repeatedly ran out despite paying for the 'keep full' program - 'what a joke' - and switched. But Rich Froeschle (Jul 2026): 'After a rocky start when they first bought out Sharp propane they've been good. I'd recommend them.'","w":[{"who":"shelby Walden","when":"2/20/21","q":"Just got home from Dallas late last night...no propane...house is fricking freezing...slept fully clothed plus wearing a wool coat & scarf...on top of a…","j":0},{"who":"Jacqueline Bergen","when":"2/20/21","q":"We have Ferrell gas (formally Sharp), called them Monday with tank at 2% and was scheduled for delivery on Wednesday. They never showed up and tank is e…","j":0},{"who":"shelby Walden","when":"2/5/22","q":"Can someone please recommend a good propane company? We use Ferrell Gas…and are out of gas AGAIN….even though we are on their “keep full” program. Ive t…","j":0},{"who":"Mike McAleer","when":"2/5/22","q":"We use Action too, they have been great. We switched from Ferrell last year when it took 5 weeks to get a fill up.","j":0},{"who":"Rich Froeschle","when":"7/30/26","q":"We use Ferrellgas on their autofill program. After a rocky start when they first bought out Sharp propane they've been good. I'd recommend them.","j":0}],"i":18},{"t":"Septic","v":"JMA Wastewater Services","c":"(512) 801-8594 / jmaseptic.com","tel":"+15128018594","m":4,"r":2,"s":"Strongly positive","f":"Jun 2024","l":"Oct 2025","ls":202510,"sr":4,"n":"Ute E (repeatedly) and Lisa Hart. 'Reasonable and reliable,' competitive pricing.","w":[{"who":"Ute Ewe","when":"6/25/24","q":"JMA Wastewater Services, Inc. P.O. Box 1101 Dripping Springs, TX 78620 Office (512) 801-8594 Email: jmaws.septic@gmail.com Web: jmaseptic.com","j":0},{"who":"Dean Dzurilla","when":"6/25/24","q":"They stink","j":1}],"i":19},{"t":"Septic","v":"Smith Septic Services (Wimberley)","c":"","tel":"","m":4,"r":2,"s":"Strongly positive","f":"Jul 2023","l":"May 2026","ls":202605,"sr":4,"n":"Elaine Pelt three times over three years - retrenched their whole leach field, 'major repairs... they were awesome.' Ryan Z: '+1 to Smith Septic Services being amazing!!'","w":[{"who":"Elaine Pelt","when":"7/14/23","q":"Smith Septic Services out of Wimberly retrenched our whole leech field 2 years ago. We were very happy with them.","j":0},{"who":"Dean Dzurilla","when":"7/14/23","q":"They do shitty work","j":1}],"i":20},{"t":"Septic","v":"All American Wastewater Solutions","c":"allamericansepticsolutions.com","tel":"","m":3,"r":2,"s":"Positive","f":"Dec 2023","l":"Oct 2025","ls":202510,"sr":3,"n":"Nicole's go-to across three separate threads.","w":[{"who":"Nicole","when":"12/28/23","q":"We usually use All American Wastewater Solutions.","j":0},{"who":"Dean Dzurilla","when":"6/25/24","q":"We use All American Septic and have never been pissed","j":1},{"who":"Dean Dzurilla","when":"12/27/25","q":"We use All American Wastewater Solution. Vince and Judy have been terrific to work with. Pretty sure their son took the business over more recently thou…","j":0},{"who":"Mike Smith","when":"12/27/25","q":"We’ve used All American for a while including pump replacement. Vince was great","j":0}],"i":21},{"t":"Waste & Hauling","v":"Austin Dumpster","c":"(512) 688-7000","tel":"+15126887000","m":3,"r":2,"s":"Positive","f":"Nov 2025","l":"May 2026","ls":202605,"sr":3,"n":"Used for LMR Dump Days. Mention LMR for a discount. Jon: 'happy with their price and service.'","w":[{"who":"Ryan Z","when":"11/7/25","q":"Fall dump day complete. Thanks to everyone who participated. We will have our next one in the spring 2026! If anyone needs Austin Dumpster (512) 688-700…","j":0},{"who":"Ryan Z","when":"5/8/26","q":"Spring dump day complete. Thanks to everyone who participated. We will have our next one in the fall 2026! If anyone needs Austin Dumpster (512) 688-700…","j":0}],"i":22},{"t":"Window Cleaning","v":"Capital Window Washing (Chris)","c":"(512) 470-3184","tel":"+15124703184","m":3,"r":2,"s":"Strongly positive","f":"Aug 2023","l":"May 2024","ls":202405,"sr":4,"n":"Susan Thiel: 10 years of use, 'affordable and always does a great job... professional, timely and owns his own company.' Leslie F also passes his number along.","w":[{"who":"Susan Thiel","when":"8/23/23","q":"Capital Window Washing (512) 470-3184 Chris is affordable and always does a great job. He is professional, timely and owns his own company. http://capit…","j":0},{"who":"Leslie Froeschle","when":"5/1/24","q":"Chris. 512-470-3184","j":0}],"i":23},{"t":"Auto","v":"Fish Mobile Detailing (Fiseha Tesfay)","c":"512-586-8196 / fishcarwash.com","tel":"+15125868196","m":3,"r":2,"s":"Strongly positive","f":"Jan 2025","l":"Jan 2025","ls":202501,"sr":4,"n":"Retta recommended; Leslie F followed up nine days later: 'exceptional and thorough job. Very hard working and dedicated. I highly recommend.'","w":[{"who":"Retta","when":"1/7/25","q":"We used Fiseha Tesfay for detailing our cars. He did a good job. His number is 512-586-8196.","j":0},{"who":"Leslie Froeschle","when":"1/16/25","q":"Thank you Retta. Fiseha just completed detailing my car and he did an exceptional and thorough job. Very hard working and dedicated. I highly recommend …","j":0}],"i":24},{"t":"Electrical","v":"Frank / Franky","c":"512-773-8752","tel":"+15127738752","m":3,"r":2,"s":"Strongly positive","f":"Apr 2024","l":"Oct 2024","ls":202410,"sr":4,"n":"Cecilia T (many years, 'pleased with his work and rates') and Wolf M ('working well for us and others in the neighborhood').","w":[{"who":"Cecilia Temponi","when":"4/24/24","q":"Wolf, we have used for many years an electrician. They are very good and responsive. Their names are Frank 512-773-8752 and Jessica 512-992-9233. Call e…","j":0},{"who":"Wolf Metzner","when":"10/22/24","q":"Franky has been working well for us and others in the neighborhood. 512.773.8752","j":0},{"who":"Bob Garrett","when":"10/22/24","q":"Thanks, I’ll try Franky","j":0}],"i":25},{"t":"Landscape & Irrigation","v":"Mark (sprinklers)","c":"(512) 626-4531","tel":"+15126264531","m":3,"r":2,"s":"Positive","f":"Sep 2025","l":"Mar 2026","ls":202603,"sr":3,"n":"Father-son team. Craigo: 'does a great job.' Wolf: 'we use Mark regularly, really nice guy!' The cheaper alternative to Pentecost.","w":[{"who":"Craigo Plackis","when":"9/30/25","q":"Mark. (512) 626-4531. Does a great job","j":0},{"who":"Craigo Plackis","when":"3/20/26","q":"Mark (512) 626-4531. Father son team","j":0},{"who":"Wolf Metzner","when":"3/21/26","q":"We use Mark regularly, really nice guy!","j":0},{"who":"Dean Dzurilla","when":"4/1/26","q":"FOR IMMEDIATE RELEASE April 1, 2026 Frontier Ridge Energy Announces Strategic Acquisition of Kinder Morgan Pipeline Assets in Southwest Austin Austin, T…","j":1},{"who":"Ian","when":"7/30/26","q":"Thanks for the insight. We’ve filled twice, both at the 40% mark, out of an abundance of caution while we learn our consumption. We have a solar system …","j":0}],"i":26},{"t":"Plumbing","v":"Proven Plumbing and Air","c":"512-775-1234","tel":"+15127751234","m":3,"r":2,"s":"Mixed","f":"Apr 2026","l":"Jun 2026","ls":202606,"sr":2,"n":"Randy M knows the owner - 'high integrity, charges less than most.' Ian used for a whole-house repipe: responsive and fairly priced but 'several communication gaps and a few errors/misses' - he later switched providers.","w":[{"who":"Randy Miller","when":"4/16/26","q":"Proven Plumbing and Air. Very good and honest. Their number is 512-775-1234.","j":0},{"who":"Ian","when":"4/17/26","q":"We used Proven Plumbing in Oct for a major plumbing retrofit (all hot and cold water). Very responsive, reasonably priced. There were several communicat…","j":0},{"who":"Ian","when":"6/16/26","q":"Good morning, Euta! We used Proven Plumbing for a major plumbing project when we first moved in (all water pipes replaced, plus added new hot water tank…","j":0},{"who":"Randy Miller","when":"6/17/26","q":"Call Proven Plumbing and Air. I know the owner: great company with skilled plumbers, high integrity and charges less than most with 399 of 399 5 stars.","j":0}],"i":27},{"t":"Carpet Cleaning","v":"ZeroRez","c":"","tel":"","m":3,"r":2,"s":"Strongly positive","f":"Sep 2024","l":"Oct 2025","ls":202510,"sr":4,"n":"Best verified outcome in the chat: Priya recommended, Rogene tried them and reported back - 'They are outstanding! Best carpet cleaner I've ever had.' More expensive than PeaceFrog, 'but well worth it.'","w":[{"who":"Rogene Buhrdorf","when":"9/12/24","q":"Hello LMR Well after Priya and Rob recommended ZeroRez for carpet cleaning, we tried them and I have to report They are outstanding! Best carpet cleaner…","j":0}],"i":28},{"t":"House Cleaning","v":"Adriana and Nielsen","c":"","tel":"","m":2,"r":2,"s":"Strongly positive","f":"Apr 2025","l":"Apr 2025","ls":202504,"sr":4,"n":"Roxy: 'not surface cleaners. They are baseboard, behind the toilet type cleaning service. Highly recommend.' Originally Miranda's referral.","w":[{"who":"Miranda","when":"2/12/25","q":"Hi. If anyone is in need of a really good house cleaning service, we have had incredible experience with this husband and wife team that drive all the w…","j":0},{"who":"Roxy","when":"4/7/25","q":"Susan, i like Adriana and Nielsen. Recommended to me by Miranda. They are not surface cleaners. They are baseboard, behind the toilet type cleaning serv…","j":0}],"i":29},{"t":"Pest Control","v":"Barefoot Mosquito","c":"","tel":"","m":2,"r":2,"s":"Strongly positive","f":"Mar 2026","l":"Mar 2026","ls":202603,"sr":4,"n":"Jacqueline B: 'many years... great to work with and will retreat if needed.' Diane confirms the retreat policy - the key differentiator.","w":[{"who":"Retta","when":"3/27/26","q":"Yes. I’ve also heard that Barefoot Mosquito is a very good service for mosquito control.","j":0},{"who":"Jacqueline Bergen","when":"3/27/26","q":"I have been using Barefoot Mosquito for many years and they are great to work with and will retreat if needed","j":0},{"who":"Micah","when":"3/27/26","q":"I used Barefoot for a year or so, but they raised their rates all of the sudden. That got me to start shopping around for other providers. It turns out …","j":0},{"who":"Susan Thiel","when":"3/27/26","q":"Yes Natasha, the mosquitos are very hungry. We use Barefoot Mosquito, which is the only service that works. They put you on an every three week service …","j":0},{"who":"Priya R","when":"3/27/26","q":"Natasha, very soon, you’ll start seeing memes about helicopter-sized Tx mosquitoes 😂","j":1}],"i":30},{"t":"Septic","v":"Bob Menard","c":"(512) 844-5577","tel":"+15128445577","m":2,"r":2,"s":"Strongly positive","f":"Jun 2025","l":"Apr 2025","ls":202504,"sr":4,"n":"Rare verified outcome: Adrian recommended him, Alejandro V came back after the job - 'replace my septic pump. Very reliable and honest.' Works for himself with one helper.","w":[{"who":"Alejandro Verduzco","when":"4/24/25","q":"Adrian. Appreciate the recommendation of Bob Menard to replace my septic pump. Very reliable and honest. Thanks!","j":0}],"i":31},{"t":"Pest Control","v":"Bug Master","c":"","tel":"","m":2,"r":2,"s":"Positive","f":"Mar 2026","l":"Mar 2026","ls":202603,"sr":3,"n":"Richie R: 'using bug masters for a few years and it seems to work well.' Retta: 'we use Bug Master and have for years.'","w":[{"who":"Retta","when":"3/27/26","q":"We use Bug Master and have for years.","j":0}],"i":32},{"t":"Remodel & Construction","v":"COJ Construction (Casey Jeter)","c":"512-217-3616","tel":"+15122173616","m":2,"r":2,"s":"Positive","f":"Mar 2023","l":"Jan 2026","ls":202601,"sr":3,"n":"Retta: kitchen remodel, 'he was very good.' Took over Randy Craig's business. Ian booked him for a detached garage estimate in 2026.","w":[{"who":"Retta","when":"3/16/23","q":"Ryan, the contractor we used was Randy Craig but he has retired. One of his employees, Casey Jeter, has taken over his business. COJ Construction, 512-2…","j":0},{"who":"Ian","when":"1/25/26","q":"Thanks Retta! I have a membership there, tried emailing but no response, will try giving them a shout, or pop in once the roads clear up. :-) By the way…","j":0}],"i":33},{"t":"HVAC","v":"Del's Heating & Air","c":"delsacservice.com","tel":"","m":2,"r":2,"s":"Positive","f":"Oct 2024","l":"Apr 2026","ls":202604,"sr":3,"n":"Nicole and Dean both use.","w":[{"who":"Dean Dzurilla","when":"10/17/24","q":"Rob - we have had great success working with Del's Heat and AC. Lots of good choice to pick from. Good luck with your AC. Bummer you're having issues.","j":0}],"i":34},{"t":"Remodel & Construction","v":"Don Thomas","c":"(512) 413-8509","tel":"+15124138509","m":2,"r":2,"s":"Positive","f":"Jan 2023","l":"Mar 2023","ls":202303,"sr":3,"n":"Kitchen and bath remodels for Tina H and Suzanne; several homes in LMR. Note: reported retiring as of Mar 2023.","w":[{"who":"Tina Hesster","when":"11/21/22","q":"Wolf, I will text you Sean Higgin’s info. He works for Don Thomas who has done several remodels in LMR. Tina","j":0},{"who":"Tina Hesster","when":"1/29/23","q":"At Suzanne’s suggestion, we too employed Don Thomas for kitchen and bath remodel. Y’all are welcome to come look at his work. Tina and Bob Don Thomas, (…","j":0},{"who":"Ryan Z","when":"3/16/23","q":"Hi Neighbors, Any recommendations on contractors for bathroom remodels? I tried Mike Christie and Don Thomas who were both recommended before, but Mike …","j":0}],"i":35},{"t":"Roofing","v":"Holden Roofing","c":"(281) 344-0665","tel":"+12813440665","m":2,"r":2,"s":"Positive","f":"Feb 2023","l":"Sep 2023","ls":202309,"sr":3,"n":"Frank Thiel: replaced a roof 10+ yrs ago, handled the insurance claim, came out and did a later repair free. Separately, a Holden rep was door-knocking in May 2025.","w":[{"who":"Susan Thiel","when":"2/1/23","q":"We have used Holden Roofing (281) 344-0665","j":0},{"who":"Frank Thiel","when":"9/15/23","q":"We used Holden years ago to replace our roof in Circle C house (which we rent out now) and they did a great job, handled the insurance claim and got us …","j":0}],"i":36},{"t":"Auto","v":"Lawson Tire & Automotive (290)","c":"","tel":"","m":2,"r":2,"s":"Strongly positive","f":"Dec 2025","l":"Dec 2025","ls":202512,"sr":4,"n":"Joe Lavin: 'Reasonable prices no upsell.' Jim Stadler: 'They may not always be the cheapest, but they've always been honest for the many years I've used them.'","w":[{"who":"Joe Lavin","when":"12/8/25","q":"Lawson Tire & Automotive on 290. Reasonable prices no upsell","j":0},{"who":"Erick Faul","when":"12/15/25","q":"Lawson just looked at my car and didn’t feel like the problem was diagnosisable enough to have me spend money. Confirmed, not safety issues waiting…said…","j":0}],"i":37},{"t":"Septic","v":"Luna Environmental","c":"(512) 338-1804","tel":"+15123381804","m":2,"r":2,"s":"Positive","f":"Jan 2025","l":"Dec 2025","ls":202512,"sr":3,"n":"Merritt uses them; Tamara inherited them from the prior owners and was 'pleased with the tech's knowledge.'","w":[],"i":38},{"t":"Landscape & Irrigation","v":"Lupton Irrigation","c":"","tel":"","m":2,"r":2,"s":"Positive","f":"Aug 2026","l":"Aug 2026","ls":202608,"sr":3,"n":"Retta: backflow service for years, expanded to sprinkler checks and repairs. Susan McFarland: 'I highly recommend Lupton as well.'","w":[{"who":"Retta","when":"8/21/26","q":"Been using Lupton Irrigation. They have done our backflow service for years so we decided to have them to handle our sprinkler checks, repairs also.","j":0}],"i":39},{"t":"Electrical","v":"Matt's Landscape Lighting (Matt Fielding)","c":"mattslandscapelighting@yahoo.com","tel":"","m":2,"r":2,"s":"Strongly positive","f":"Oct 2025","l":"Oct 2025","ls":202510,"sr":4,"n":"Dean: 4 projects over the years, 'super reliable and incredibly fair pricing.' Kevin Conlan followed up 3 weeks later: 'outstanding work... amazing work, fair pricing.'","w":[{"who":"Dean Dzurilla","when":"10/9/25","q":"We are very happy with the outdoor lighting and electrical work Matt Fielding does.","j":0},{"who":"Kevin Conlan","when":"10/28/25","q":"Thank you Dean for the excellent referral to Matt’s Landscape Lighting (Matt Fielding). He did outstanding work with installing front and backyard yard …","j":0}],"i":40},{"t":"Window Cleaning","v":"Outdoor Jack","c":"(737) 510-4477","tel":"+17375104477","m":2,"r":2,"s":"Positive","f":"Oct 2025","l":"Jun 2026","ls":202606,"sr":3,"n":"Susan Thiel: 'amazing job cleaning our windows. They even got the tall windows at 22 ft.' Dean also happy. (See responsiveness caveat under Pool.)","w":[{"who":"Dean Dzurilla","when":"3/2/25","q":"Matthew - I hear the OutdoorJack guys are a pretty good. I’ll privately introduce you to Matt. They also do windows and pools.","j":0},{"who":"Susan Thiel","when":"10/2/25","q":"Outdoor Jack did an amazing job cleaning our windows. They even got the tall windows at 22’ <attached: 00005409-PHOTO-2025-10-02-16-41-31.jpg>","j":0},{"who":"Dean Dzurilla","when":"6/17/26","q":"We have used OutdoorJack for window cleaning and have been happy with them.","j":0}],"i":41},{"t":"Carpet Cleaning","v":"PeaceFrog","c":"peacefrogcarpetcleaning.com","tel":"","m":2,"r":2,"s":"Mixed","f":"Sep 2024","l":"Sep 2024","ls":202409,"sr":2,"n":"Neil P: 'reasonable prices, very friendly, and do a good job. But they can struggle with tougher stains.'","w":[{"who":"Neil Pavlic","when":"9/7/24","q":"We’ve used peacefrog and are generally happy. Reasonable prices, very friendly, and do a good job. but they can struggle with tougher stains (like a 2 y…","j":0},{"who":"Rogene Buhrdorf","when":"9/12/24","q":"Hello LMR Well after Priya and Rob recommended ZeroRez for carpet cleaning, we tried them and I have to report They are outstanding! Best carpet cleaner…","j":0}],"i":42},{"t":"Propane","v":"Pinnacle Propane","c":"","tel":"","m":2,"r":2,"s":"Mixed","f":"Dec 2023","l":"Jul 2026","ls":202607,"sr":2,"n":"Scott Jensen: 'Pinnacle is always more expensive. Always.' Ian uses them - got a summer pre-buy at $1.89/gal vs $2.40 spot (900 gal, use by Mar 2027).","w":[{"who":"Scott Jensen","when":"2/18/21","q":"FYI: Drove to pinnacle propane in Dripping and talked to a driver filling his truck. I am on their delivery list now. Might be 2-3 days to catch up thou…","j":0},{"who":"Scott Jensen","when":"12/12/23","q":"Direct Propane for us. (512) 276-7800. Pinnacle is always more expensive. Always.","j":0},{"who":"Dean Dzurilla","when":"12/12/23","q":"I Got Gas is my wife’s favorite.","j":1}],"i":43},{"t":"Septic","v":"Rainbow Septic","c":"rainbowseptic.com","tel":"","m":2,"r":2,"s":"Positive","f":"Feb 2026","l":"Oct 2025","ls":202510,"sr":3,"n":"Natasha Saylor: 'seemed good.' CODY also named them.","w":[{"who":"Natasha Saylor","when":"2/22/26","q":"We’re new to septic but we used rainbow septic and they seemed good! https://rainbowseptic.com/order/","j":0},{"who":"Dean Dzurilla","when":"2/22/26","q":"Eh. They’re full of it.","j":1}],"i":44},{"t":"Landscape & Irrigation","v":"Sprinkler Repair Pros","c":"(512) 387-5966 / sprinklerrepairpros.com","tel":"+15123875966","m":2,"r":2,"s":"Positive","f":"Oct 2025","l":"Aug 2026","ls":202608,"sr":3,"n":"Used for the LMR front entrance. Mention LMR for a discount. Ute: 'not cheap. Great at diagnosing and getting you an offer.'","w":[{"who":"Ryan Z","when":"10/13/25","q":"We have been using Sprinkler Repair Pros for our house and for the front entrance sprinkler improvements we made earlier this year. Mention LMR and they…","j":0}],"i":45},{"t":"Roofing","v":"The Brothers Gutters","c":"","tel":"","m":2,"r":2,"s":"Positive","f":"Feb 2024","l":"Feb 2024","ls":202402,"sr":3,"n":"Craigo had gutters replaced, 'seem to be working fine.' Ryan Z passed the referral along.","w":[],"i":46},{"t":"Propane","v":"Terry Garnett / LMC","c":"","tel":"","m":4,"r":1,"s":"Mixed","f":"Feb 2021","l":"Feb 2022","ls":202202,"sr":2,"n":"Ute E: 'pretty happy' at times, but they missed top-offs for nearly a year, never returned a voicemail, and didn't show during the 2021 freeze.","w":[{"who":"Ute Ewe","when":"2/18/21","q":"Garnett propane's voicemail finally accepted a voicemail. Never heard back. They are our contracted provider that is supposed to periodically refill our…","j":0},{"who":"Merritt Funk","when":"2/18/21","q":"Garnett called Us Tuesday and said they would deliver to us on Thursday. We left could mail on Saturday before the mailbox filled up. I think it’s the r…","j":0},{"who":"Merritt Funk","when":"2/19/21","q":"Who has Garnett ? The truck has about 900 gal if your a customer","j":0},{"who":"Ute Ewe","when":"2/20/21","q":"We are with Terry Garnett. LMC. I wonder if our gauge is broken. The needle hasn't moved in days... Maybe we are lower than we think we are...","j":0},{"who":"Ute Ewe","when":"2/5/22","q":"We use Terri Garnett and are pretty happy. Not sure they're open today though...","j":0},{"who":"John Ellis","when":"6/1/26","q":"Hello, neighbors. There was apparently another mail theft in our neighborhood (and others in SW Austin) on May 21st. We were contacted today by Detectiv…","j":0}],"i":47},{"t":"Plumbing","v":"Christianson's Plumbing & AC","c":"christiansonco.com","tel":"","m":3,"r":1,"s":"Positive","f":"Jun 2024","l":"Nov 2024","ls":202411,"sr":3,"n":"All three mentions from Rogene B. 'Can come quickly and they have been good for us.'","w":[{"who":"Rogene Buhrdorf","when":"6/1/24","q":"Christianson’s plumbing is good.","j":0},{"who":"Rogene Buhrdorf","when":"11/5/24","q":"Christianson’s Plumbing can come quickly and they have been good for us","j":0}],"i":48},{"t":"Propane","v":"AmeriGas","c":"amerigas.com","tel":"","m":2,"r":1,"s":"Mixed","f":"Feb 2022","l":"Dec 2023","ls":202312,"sr":2,"n":"Ryan Z liked the service initially, then shopped around over $3.80/gal plus a 2.65% credit card surcharge.","w":[{"who":"Ryan Z","when":"2/5/22","q":"I’m sorry Shelby. We have had really good service with Amerigas, but only our stove top and fireplace are propane. https://www.amerigas.com","j":0},{"who":"Ryan Z","when":"12/12/23","q":"What is the current price per gallon? Do they charge a credit card processing fee? We currently have AmeriGas and they are $3.80 per gallon and plan to …","j":0}],"i":49},{"t":"Auto","v":"Auto Tek (off Gillis)","c":"","tel":"","m":2,"r":1,"s":"Positive","f":"Dec 2025","l":"May 2026","ls":202605,"sr":3,"n":"Craigo, twice - including as a Toyota alternative to a $7,700 dealership quote. 'Family owns and operated. Do a great job.'","w":[{"who":"Craigo Plackis","when":"12/8/25","q":"We use the guy at Auto Tek off of Gillis next to Blazer Tag family owns and operated. Do a great job.","j":0}],"i":50},{"t":"Electrical","v":"Cool Ray Electric","c":"(512) 981-8215","tel":"+15129818215","m":2,"r":1,"s":"Positive","f":"Aug 2025","l":"Oct 2025","ls":202510,"sr":3,"n":"Joe Lavin, both times. 'Ask for Marty.'","w":[{"who":"Joe Lavin","when":"8/13/25","q":"Cool Ray Electric - (512) 981-8215","j":0}],"i":51},{"t":"Electrical","v":"Jessica","c":"512-992-9233","tel":"+15129929233","m":2,"r":1,"s":"Positive","f":"Nov 2023","l":"Apr 2024","ls":202404,"sr":3,"n":"Cecilia T: used her for over 10 years, 'she does a great job.'","w":[{"who":"Cecilia Temponi","when":"11/10/23","q":"We have use the services of a female electrician for over 10 years. She does a great job. Her name is Jessica 512-992-9233","j":0},{"who":"Cecilia Temponi","when":"4/24/24","q":"Wolf, we have used for many years an electrician. They are very good and responsive. Their names are Frank 512-773-8752 and Jessica 512-992-9233. Call e…","j":0}],"i":52},{"t":"Bin Cleaning","v":"Lemon Fresh Bins","c":"","tel":"","m":2,"r":1,"s":"Strongly positive","f":"Sep 2022","l":"Aug 2024","ls":202408,"sr":4,"n":"Scott Jensen, twice: ~$30-31/month for both bins, 'their service has been exceptional.' Comes Saturdays after Friday pickup.","w":[{"who":"Scott Jensen","when":"8/16/24","q":"I use lemon fresh bins. They come to LMR once a month and clean both bins for us for something around $30. Have to leave your bins out after Friday pick…","j":0}],"i":53},{"t":"Handyman","v":"Sean Higgins","c":"(346) 600-3086","tel":"+13466003086","m":2,"r":1,"s":"Positive","f":"Nov 2022","l":"Aug 2025","ls":202508,"sr":3,"n":"Tina Hesster, twice. Formerly worked for Don Thomas.","w":[],"i":54},{"t":"Plumbing","v":"Thunderbird Plumbing","c":"","tel":"","m":2,"r":1,"s":"Positive","f":"Dec 2022","l":"Feb 2024","ls":202402,"sr":3,"n":"Both mentions from Elaine Pelt. 'We love Thunderbird!'","w":[],"i":55},{"t":"Drywall","v":"1826 roadside drywall family","c":"","tel":"","m":1,"r":1,"s":"Neutral","f":"Apr 2026","l":"Apr 2026","ls":202604,"sr":1,"n":"Scott Jensen: sign on 1826 near Nutty Brown. A contractor friend uses them and says they're good. Second-hand only.","w":[],"i":56},{"t":"Remodel & Construction","v":"A's Marble & Granite (Arturo)","c":"512-563-7189","tel":"+15125637189","m":1,"r":1,"s":"Positive","f":"Dec 2025","l":"Dec 2025","ls":202512,"sr":3,"n":"Richie Rodriguez - countertop cutting/install.","w":[{"who":"Richie Rodriguez","when":"12/2/25","q":"You can try Arturo with A’s Marble & Granite to see if they can help: 512-563-7189","j":0}],"i":57},{"t":"Handyman","v":"ABC Home & Commercial Services","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Oct 2024","l":"Oct 2024","ls":202410,"sr":3,"n":"Susan McFarland. Bundles handyman with pool/lawn/pest/HVAC.","w":[{"who":"Susan Thiel","when":"8/16/22","q":"Good to know about ABC. We use a service that costs. $300/ mo, which seems expensive, but maybe that’s the going rate for pool service?","j":0},{"who":"Ryan Z","when":"8/16/22","q":"So they are struggling with taking on new clients especially if it’s your neighbor as we experienced recently but they finally had an opening for adding…","j":0},{"who":"Ryan Z","when":"8/21/23","q":"I know several of us utilize ABC for pool cleaning. We have used them for several years. They come to the neighborhood on Thursdays usually. We pay $285…","j":0}],"i":58},{"t":"Septic","v":"AJ Liquid Waste Haulers","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"May 2026","l":"May 2026","ls":202605,"sr":3,"n":"Retta - pump-outs.","w":[{"who":"Retta","when":"5/11/26","q":"Connie, we used AJ Liquid waste Haulers to pump out our septic. Not sure if they do repairs. I can send their contact information if you want.","j":0}],"i":59},{"t":"Septic","v":"ALCAM","c":"(512) 660-3994","tel":"+15126603994","m":1,"r":1,"s":"Positive","f":"Mar 2024","l":"Mar 2024","ls":202403,"sr":3,"n":"Erick Faul - for the county-required annual maintenance contract.","w":[],"i":60},{"t":"Electrical","v":"Aaron Bedwell","c":"361-548-9681","tel":"+13615489681","m":1,"r":1,"s":"Positive","f":"Feb 2026","l":"Feb 2026","ls":202602,"sr":3,"n":"Matthew Frank: 'our friend... an excellent electrician.'","w":[{"who":"Matthew Frank","when":"2/25/26","q":"Our friend Aaron Bedwell is an excellent electrician. You can text him and tell him Matthew Frank gave you his info and you live across the street. 361-…","j":0},{"who":"Jonathan Saylor","when":"2/25/26","q":"Awesome thank you so much! Love the play on Abel 😂","j":1}],"i":61},{"t":"Glass & Windows","v":"Ace Discount Glass","c":"512.345.3105","tel":"+15123453105","m":1,"r":1,"s":"Negative","f":"Jun 2024","l":"Jun 2024","ls":202406,"sr":0,"n":"Recommended by Rogene, but Shelby called: 'they don't come this far south.' Service area no longer covers LMR.","w":[{"who":"Rogene Buhrdorf","when":"6/4/24","q":"Ace Discount Glass. 512.345.3105 Just replace the glass. Good luck Shelby","j":0}],"i":62},{"t":"Roofing","v":"Ace Roofing (DJ Shea)","c":"aceroofingtexas.com","tel":"","m":1,"r":1,"s":"Positive","f":"Sep 2023","l":"Sep 2023","ls":202309,"sr":3,"n":"Jim Stadler: 'He'll climb the roof with an insurance adjuster to make sure everyone is on the same page.'","w":[{"who":"Jim Stadler","when":"9/15/23","q":"Ace Roofing - I worked with DJ Shea. He'll climb the roof with an insurance adjuster to make sure everyone is on the same page https://aceroofingtexas.c…","j":0},{"who":"Susan Phillips","when":"9/15/23","q":"Haha. He came to our house earlier today. I think they’re just opportunist after hearing about the hail in our neighborhood!","j":1}],"i":63},{"t":"Roofing","v":"Action Roofing (Jake)","c":"+1 (512) 897-5680","tel":"+15128975680","m":1,"r":1,"s":"Strongly positive","f":"Sep 2023","l":"Sep 2023","ls":202309,"sr":4,"n":"Miranda: three houses, 'amazing work,' family owned, 'know all the ins and outs of working with insurance companies.'","w":[{"who":"Miranda","when":"9/16/23","q":"We have used action roofing for our last three houses and they do amazing work. They are family owned and they know all the ins and outs of working with…","j":0}],"i":64},{"t":"Pest Control","v":"Adaptive Pest Control","c":"","tel":"","m":1,"r":1,"s":"Negative","f":"May 2022","l":"May 2022","ls":202205,"sr":0,"n":"Door-to-door solicitation only; Jim Stadler flagged it as a heads-up, not a recommendation.","w":[{"who":"Jim Stadler","when":"5/18/22","q":"Just a heads-up: there's a salesman from Adaptive Pest Control going door-to-door around the neighborhood. He's a nice kid, but I suspect some will want…","j":0}],"i":65},{"t":"Appliance Repair","v":"Adlai Reilly","c":"513-298-3032","tel":"+15132983032","m":1,"r":1,"s":"Strongly positive","f":"Sep 2022","l":"Sep 2022","ls":202209,"sr":4,"n":"Randy Miller: fixed a dishwasher and services their HVAC. 'I highly recommend him.'","w":[{"who":"Randy Miller","when":"9/13/22","q":"Our dishwasher went out and to keep this short I found a great person to repair it and service our hfac system: Adlai Reilly. I highly recommend him. Hi…","j":0}],"i":66},{"t":"HVAC","v":"Alamo Austin Air","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Jan 2026","l":"Jan 2026","ls":202601,"sr":3,"n":"Jeff Koke: used for years, 'honest and reliable. Fair pricing.'","w":[{"who":"Jeff Koke","when":"1/29/26","q":"For HVAC, we’ve used Alamo Austin Air for years. Honest and reliable. Fair pricing.","j":0}],"i":67},{"t":"Professional Services","v":"Allie Fishbaugh (massage)","c":"512-599-1978","tel":"+15125991978","m":1,"r":1,"s":"Positive","f":"May 2024","l":"May 2024","ls":202405,"sr":3,"n":"Neighbor, newly licensed. Brings her table to your house. Deep tissue, Thai table, Swedish. Tina: 'I had a massage and enjoyed it.'","w":[{"who":"Tina Hesster","when":"5/9/24","q":"Dear All, if you want to treat yourself to a massage AND support a neighbor, Allie Fishbaugh recently obtained her massage therapy license. She is willi…","j":0}],"i":68},{"t":"Remodel & Construction","v":"Andrew James Custom Builders","c":"512-497-9313","tel":"+15124979313","m":1,"r":1,"s":"Positive","f":"Dec 2024","l":"Dec 2024","ls":202412,"sr":3,"n":"Valerie's husband - a neighbor. Remodels, additions, handyman. Decades of building experience, has worked in LMR.","w":[{"who":"Valerie","when":"12/11/24","q":"Hi Neighbors! Just wanted to let everyone know my husband has his own construction company and is available for any project big or small. He has a coupl…","j":0}],"i":69},{"t":"Glass & Windows","v":"Art's Glassworks","c":"512-514-5148","tel":"+15125145148","m":1,"r":1,"s":"Positive","f":"Apr 2025","l":"Apr 2025","ls":202504,"sr":3,"n":"Randy Miller.","w":[],"i":70},{"t":"Roofing","v":"Austin Gutter Man","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Feb 2023","l":"Feb 2023","ls":202302,"sr":3,"n":"Deborah V-D: used them a few times.","w":[{"who":"Deborah Vollmer Dahlke","when":"2/2/23","q":"We couldn’t find the gutter company. Best bet is to call Wilson roofing and ask. We also used “Austin Gutter Man” a few times. Good luck!","j":0}],"i":71},{"t":"Pool","v":"Austin Leak Detection","c":"512-458-5325","tel":"+15124585325","m":1,"r":1,"s":"Positive","f":"Sep 2025","l":"Sep 2025","ls":202509,"sr":3,"n":"Roxy - underground pool leak location.","w":[],"i":72},{"t":"Painting","v":"Barton Springs Painting","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Jun 2024","l":"Jun 2024","ls":202406,"sr":3,"n":"Cynthia Miller: exterior. Got 5 bids, theirs was on the low end but not lowest. 'We were very pleased.'","w":[{"who":"Cynthia Miller","when":"6/13/24","q":"Barton Springs Painting did the outside of our house. Great job! We got 5 bids. Their’s was actually on the low end, but not the lowest. We were very pl…","j":0}],"i":73},{"t":"Tree Service","v":"Beny's Tree Service","c":"512-412-3784","tel":"+15124123784","m":1,"r":1,"s":"Positive","f":"Aug 2024","l":"Aug 2024","ls":202408,"sr":3,"n":"Susan Phillips: removals plus stump grinding, 'were happy with them.'","w":[{"who":"Susan Phillips","when":"8/15/24","q":"We used Beny’s Tree service recently and were happy with them. Removed trees and ground several old stumps for us.","j":0}],"i":74},{"t":"Landscape & Irrigation","v":"Beto Aviles","c":"(512) 902-4355","tel":"+15129024355","m":1,"r":1,"s":"Positive","f":"Apr 2024","l":"Apr 2024","ls":202404,"sr":3,"n":"Retta: several years, 'reliable and does a good job.' Riding mowers for large field areas.","w":[],"i":75},{"t":"Seasonal","v":"BigTex Christmas Lights","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Nov 2025","l":"Nov 2025","ls":202511,"sr":3,"n":"Did the LMR front entrance for the HOA in 2025. Offering an LMR resident discount.","w":[{"who":"Ryan Z","when":"11/24/25","q":"Hi neighbors! The HOA board decided to bring in a professional company this year to decorate the front entrance — we hope everyone is enjoying the new l…","j":0}],"i":76},{"t":"Small Engine Repair","v":"Bill Bradshaw","c":"(512) 567-7514","tel":"+15125677514","m":1,"r":1,"s":"Strongly positive","f":"Jun 2026","l":"Jun 2026","ls":202606,"sr":4,"n":"Randy Miller: retired, works from home off William Cannon, solely on chain saws. 'Very good and very reasonable.'","w":[{"who":"Randy Miller","when":"6/19/26","q":"Bill Bradshaw (512) 567-7514 off William Cannon is retired and works from his home. Works solely on chain saws. Is very good and very reasonable","j":0}],"i":77},{"t":"Plumbing","v":"Brad B Plumbing","c":"512-402-6901","tel":"+15124026901","m":1,"r":1,"s":"Positive","f":"Dec 2022","l":"Dec 2022","ls":202212,"sr":3,"n":"Susan Phillips.","w":[{"who":"Susan Phillips","when":"12/14/22","q":"I’ve used Brad B plumbing. 512-402-6901","j":0}],"i":78},{"t":"Handyman","v":"Brady Tayar (local student)","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Jun 2026","l":"Jun 2026","ls":202606,"sr":3,"n":"Susan Phillips: '5 stars' - hauling, pickups, odd jobs. Bowie student living in LMR.","w":[],"i":79},{"t":"HVAC","v":"Bryant Mitchell","c":"+1 (254) 495-4303","tel":"+12544954303","m":1,"r":1,"s":"Positive","f":"Jan 2026","l":"Jan 2026","ls":202601,"sr":3,"n":"Craigo: 'good guy honest.'","w":[],"i":80},{"t":"Roofing","v":"C+ Roofing Co.","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Sep 2023","l":"Sep 2023","ls":202309,"sr":3,"n":"Dean.","w":[],"i":81},{"t":"Remodel & Construction","v":"CK&R Cabinets (Scott Healy)","c":"802-379-7203","tel":"+18023797203","m":1,"r":1,"s":"Positive","f":"Nov 2022","l":"Nov 2022","ls":202211,"sr":3,"n":"KB: 'they did all of our cabinets.. super happy with the experience.'","w":[{"who":"KB","when":"11/21/22","q":"Account manager and designers name is Scott Healy.. they did all of our cabinets.. super happy with the experience","j":0}],"i":82},{"t":"Garage Doors","v":"Carlos Acosta","c":"(512) 947-7076","tel":"+15129477076","m":1,"r":1,"s":"Positive","f":"Jan 2026","l":"Jan 2026","ls":202601,"sr":3,"n":"Roxy.","w":[{"who":"Roxy","when":"1/12/26","q":"Priya, we use Carlos Acosta for our garage doors (512) 947-7076","j":0}],"i":83},{"t":"Landscape & Irrigation","v":"Carlos Martinez","c":"+1 (737) 742-1935","tel":"+17377421935","m":1,"r":1,"s":"Strongly positive","f":"Aug 2026","l":"Aug 2026","ls":202608,"sr":4,"n":"Miranda: independent, handles all irrigation, landscaping and rock work. 'Dependable for the last 12 years.'","w":[{"who":"Miranda","when":"8/21/26","q":"We have a guy that is independent and has managed all of our irrigation, landscaping and rock work needs. Carlos Martinez +1 (737) 742-1935","j":0}],"i":84},{"t":"Electrical","v":"ChargePro (EV charger install)","c":"512.625.6800","tel":"+15126256800","m":1,"r":1,"s":"Positive","f":"Aug 2025","l":"Aug 2025","ls":202508,"sr":3,"n":"Wolf Metzner: 'very professional.'","w":[],"i":85},{"t":"Window Cleaning","v":"Clean2AT (Michael Trevino)","c":"(512) 592-9230","tel":"+15125929230","m":1,"r":1,"s":"Strongly positive","f":"Jun 2025","l":"Jun 2025","ls":202506,"sr":4,"n":"Ute Ewe: 'an amazing job with our windows. And they were dirty for sure... also very reasonable.'","w":[{"who":"Ute Ewe","when":"6/27/25","q":"Window cleaning recommendation. Shout out to Michael Trevino with Clean2AT. He did an amazing job with our windows. And they were dirty for sure. I got …","j":0}],"i":86},{"t":"Remodel & Construction","v":"Coby Osborne","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Mar 2025","l":"Mar 2025","ls":202503,"sr":3,"n":"Rogene: 'I've used Coby for years' - foundation assessment.","w":[],"i":87},{"t":"Auto","v":"Colby (mobile detailing)","c":"(512) 297-1874","tel":"+15122971874","m":1,"r":1,"s":"Positive","f":"Jul 2023","l":"Jul 2023","ls":202307,"sr":3,"n":"Craigo: 'Has done my cars. Great work.'","w":[{"who":"Craigo Plackis","when":"7/8/23","q":"Here is Colby’s contact. (512) 297-1874. Has done my cars. Great work. Not sure what he is charging now.","j":0}],"i":88},{"t":"Plumbing","v":"Cold is On the Right","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Feb 2026","l":"Feb 2026","ls":202602,"sr":3,"n":"Micah: used multiple times over the years, 'very reliable and did great work.'","w":[],"i":89},{"t":"Tree Service","v":"Colin Trotter (arborist)","c":"361.774.9951","tel":"+13617749951","m":1,"r":1,"s":"Positive","f":"Dec 2024","l":"Dec 2024","ls":202412,"sr":3,"n":"Rogene: 'He's an excellent arborist.'","w":[{"who":"Rogene Buhrdorf","when":"12/23/24","q":"Colin Trotter 361.774.9951 He’s an excellent arborist","j":0}],"i":90},{"t":"HVAC","v":"Cool Horizons","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Oct 2024","l":"Oct 2024","ls":202410,"sr":3,"n":"Emily Dorch.","w":[],"i":91},{"t":"Professional Services","v":"Crystal Smith (CPA)","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Sep 2024","l":"Sep 2024","ls":202409,"sr":3,"n":"Dean's referral: 'She's good people.' Introduced to two neighbors.","w":[],"i":92},{"t":"Remodel & Construction","v":"Danny","c":"(737) 202-0146","tel":"+17372020146","m":1,"r":1,"s":"Positive","f":"Mar 2023","l":"Mar 2023","ls":202303,"sr":3,"n":"Craigo: 'does all types of remodels.'","w":[{"who":"Craigo Plackis","when":"3/16/23","q":"Danny. (737) 202-0146. Died all types of remodels","j":0}],"i":93},{"t":"Tree Service","v":"Edgars Tree Service","c":"edgarstreeservicellc.com","tel":"","m":1,"r":1,"s":"Positive","f":"Nov 2024","l":"Nov 2024","ls":202411,"sr":3,"n":"Rob Pelt: 'They did a great job.'","w":[],"i":94},{"t":"Landscape & Irrigation","v":"Frank (irrigation)","c":"(512) 698-6508","tel":"+15126986508","m":1,"r":1,"s":"Positive","f":"Sep 2025","l":"Sep 2025","ls":202509,"sr":3,"n":"Tina Hesster: irrigation installed around the pool, 'pleased with the results and the cost.'","w":[{"who":"Tina Hesster","when":"9/30/25","q":"Retta, we recently installed irrigation around the pool. Pleased with the results and the cost. Contact Frank (512) 698-6508","j":0}],"i":95},{"t":"Landscape & Irrigation","v":"GEC Landscape","c":"","tel":"","m":1,"r":1,"s":"Strongly positive","f":"Mar 2025","l":"Mar 2025","ls":202503,"sr":4,"n":"Ute Ewe: 'Love, love, love GEC. Privately owned in Circle C. All electric. Competitive pricing and great service.' Also aerating and fertilizing.","w":[],"i":96},{"t":"Septic","v":"GP Equipment Co. (DIY pumps)","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"May 2026","l":"May 2026","ls":202605,"sr":3,"n":"Jim Stadler has DIY'd his own septic pumps and buys them here.","w":[{"who":"Jim Stadler","when":"5/11/26","q":"I've DIY'd the pumps and have always bought them at GP Equipment GP Equipment Co. | Austin, TX https://share.google/b2QZB7en2J5YvXl1l","j":0}],"i":97},{"t":"Remodel & Construction","v":"Goodwood Design","c":"goodwoodesign.com","tel":"","m":1,"r":1,"s":"Positive","f":"Apr 2024","l":"Apr 2024","ls":202404,"sr":3,"n":"Vicki: 'quality company' - decks.","w":[],"i":98},{"t":"Plumbing","v":"Greengo Plumbing (Parke Davidson)","c":"(512) 784-2389","tel":"+15127842389","m":1,"r":1,"s":"Positive","f":"May 2024","l":"May 2024","ls":202405,"sr":3,"n":"Ryan Z uses for annual RPZ backflow testing for City of Austin.","w":[{"who":"Ryan Z","when":"5/9/24","q":"Erik - this is who we use for our annual RPZ maintenance test for the City of Austin. Parke Davidson, CEO/RMP Greengo Plumbing Services, LLC (512) 784-2389","j":0}],"i":99},{"t":"Propane","v":"Heart of Texas Propane (prev O'Brien)","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Oct 2024","l":"Oct 2024","ls":202410,"sr":3,"n":"Priya R.","w":[{"who":"Priya R","when":"10/28/24","q":"I use Heart of Texas Propane( prev OBrien Propane)","j":0}],"i":100},{"t":"Handyman","v":"Henry Robarts","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Oct 2024","l":"Oct 2024","ls":202410,"sr":3,"n":"Lia Ulbrich: did their kitchen remodel, 'a jack of all trades. He can do and fix anything.'","w":[],"i":101},{"t":"Painting","v":"Jorge Rios","c":"512-312-8885","tel":"+15123128885","m":1,"r":1,"s":"Strongly positive","f":"Dec 2022","l":"Dec 2022","ls":202212,"sr":4,"n":"Suzanne: 'I highly recommend Jorge Rios for painting. He has painted the outside and inside of our house. He does a great job, is very reasonable, and dependable.'","w":[{"who":"Suzanne","when":"12/9/22","q":"I highly recommend Jorge Rios for painting. He has painted the outside and inside of our house. He does a great job, is very reasonable, and dependable.…","j":0}],"i":102},{"t":"Carpet Cleaning","v":"K&M Steam Cleaning","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Sep 2024","l":"Sep 2024","ls":202409,"sr":3,"n":"Dean: 'we've had good luck with' them.","w":[{"who":"Dean Dzurilla","when":"9/7/24","q":"Hi Ryan - we've had good luck with K&M Steam Cleaning","j":0}],"i":103},{"t":"Roofing","v":"Kidd Roofing (Matt Boyles)","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Oct 2023","l":"Oct 2023","ls":202310,"sr":3,"n":"Leslie Froeschle: State Farm approved a full roof, 'great working with Matt Boyles.'","w":[{"who":"Leslie Froeschle","when":"10/25/23","q":"State Farm acknowledged wind and hail damage and provided us with a new roof. It was great working with Matt Boyles with Kidd Roofing.","j":0}],"i":104},{"t":"House Cleaning","v":"Let Kelly Cleaning Service","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Apr 2025","l":"Apr 2025","ls":202504,"sr":3,"n":"Rogene.","w":[],"i":105},{"t":"Professional Services","v":"Lone Star Eye (SW Parkway)","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"May 2026","l":"May 2026","ls":202605,"sr":3,"n":"Richie Rodriguez: 'great' - optometrist.","w":[{"who":"Richie Rodriguez","when":"5/26/26","q":"Lone Star Eye off SW Parkway is great.","j":0}],"i":106},{"t":"House Cleaning","v":"Loremi Cespede Herrera","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Apr 2025","l":"Apr 2025","ls":202504,"sr":3,"n":"Priya R's cleaner.","w":[{"who":"Matthew Frank","when":"3/3/26","q":"Morning everyone, Going way back here, but Rogene, do you still use this service? And Priya, do you still use Loremi? We need new cleaners so I went bac…","j":0}],"i":107},{"t":"Pet Services","v":"Lucky Dog Mobile Grooming (Jake)","c":"+1 (573) 984-1065","tel":"+15739841065","m":1,"r":1,"s":"Positive","f":"Jan 2025","l":"Jan 2025","ls":202501,"sr":3,"n":"Roxanna - mobile grooming.","w":[{"who":"Roxanna","when":"1/7/25","q":"I’ve been using Lucky dog mobile grooming service. They’re actually coming next week to take care of my dog. +1 (573) 984-1065 Jake is my Groomer.","j":0}],"i":108},{"t":"Drywall","v":"Luis (drywall)","c":"512-919-9424","tel":"+15129199424","m":1,"r":1,"s":"Positive","f":"Apr 2026","l":"Apr 2026","ls":202604,"sr":3,"n":"Via Brandie's son Denver.","w":[{"who":"Brandie","when":"4/14/26","q":"My son Denver has a drywall guy. His name is Luis and his number is 512-919-9424.","j":0}],"i":109},{"t":"Remodel & Construction","v":"Madrid Plastering (Octavio Cantera)","c":"512-296-9323","tel":"+15122969323","m":1,"r":1,"s":"Positive","f":"Jul 2025","l":"Jul 2025","ls":202507,"sr":3,"n":"Retta: rock/brick work, 'they did a good job.' Uncertain if still operating.","w":[],"i":110},{"t":"Remodel & Construction","v":"Marco","c":"(737) 226-8281","tel":"+17372268281","m":1,"r":1,"s":"Negative","f":"Jun 2023","l":"Jun 2023","ls":202306,"sr":0,"n":"Craigo recommended for concrete slabs, but Randy M: 'called about a half dozen times, no answer and voice mail isn't set up.'","w":[],"i":111},{"t":"Remodel & Construction","v":"Mario Mokarzel","c":"(512) 293-3001","tel":"+15122933001","m":1,"r":1,"s":"Positive","f":"Feb 2023","l":"Feb 2023","ls":202302,"sr":3,"n":"Wolf Metzner: built their pergola 'for a decent price.'","w":[{"who":"Wolf Metzner","when":"2/7/23","q":"Hi Susan, Mario Mokarzel ((512) 293-3001) built out pergola for a decent price. You are welcome to check it out. Wolf","j":0}],"i":112},{"t":"Painting","v":"Mario Vicenzio","c":"512 917 4460","tel":"+15129174460","m":1,"r":1,"s":"Positive","f":"Jun 2024","l":"Jun 2024","ls":202406,"sr":3,"n":"Cecilia T: 'reliable and does a very good job. He works better if you text him first.'","w":[],"i":113},{"t":"Electrical","v":"Max Electrical Services","c":"maxelectricalservices.com","tel":"","m":1,"r":1,"s":"Positive","f":"Apr 2024","l":"Apr 2024","ls":202404,"sr":3,"n":"Nicole.","w":[],"i":114},{"t":"HVAC","v":"McCullough Heating and Air","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Jan 2026","l":"Jan 2026","ls":202601,"sr":3,"n":"Hector Elizondo: 'so far so good' after a couple of years.","w":[],"i":115},{"t":"Auto","v":"Mike Lilly, Locksmith Associate","c":"409-767-2402","tel":"+14097672402","m":1,"r":1,"s":"Positive","f":"Jun 2026","l":"Jun 2026","ls":202606,"sr":3,"n":"Craigo: 'For all car key issues... Did a great job replacing our ignition and comes to you.'","w":[{"who":"Craigo Plackis","when":"6/14/26","q":"For all car key issues, Mike Lilly, Locksmith Associate, 409-767-2402. Did a great job replacing our ignition and comes to you","j":0}],"i":116},{"t":"House Cleaning","v":"Miranda's Georgetown team","c":"","tel":"","m":1,"r":1,"s":"Strongly positive","f":"Feb 2025","l":"Feb 2025","ls":202502,"sr":4,"n":"Husband-and-wife team who drive from Georgetown. 'Very thorough and spend time on every detail... they are not in and out.'","w":[{"who":"Miranda","when":"2/12/25","q":"Hi. If anyone is in need of a really good house cleaning service, we have had incredible experience with this husband and wife team that drive all the w…","j":0}],"i":117},{"t":"Pest Control","v":"Mosquito Joe","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Mar 2026","l":"Mar 2026","ls":202603,"sr":3,"n":"Mike Smith: 'seems to help.'","w":[],"i":118},{"t":"Pest Control","v":"Mosquito Shield","c":"","tel":"","m":1,"r":1,"s":"Negative","f":"Mar 2026","l":"Mar 2026","ls":202603,"sr":0,"n":"Matthew Frank: 'really strict about coming only once every two weeks. Unfortunately they seemed to come the day before it rained every time.'","w":[{"who":"Matthew Frank","when":"3/27/26","q":"Does anyone have a service that will come back out to retreat after it rains? I used mosquito shield last year and they were really strict about coming …","j":0}],"i":119},{"t":"Dryer Vent & Ducts","v":"Mr Duct Cleaner","c":"+1 (512) 701-1033","tel":"+15127011033","m":1,"r":1,"s":"Positive","f":"May 2026","l":"May 2026","ls":202605,"sr":3,"n":"Susan McFarland - air duct cleaning.","w":[],"i":120},{"t":"HVAC","v":"Mr. Cool","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Oct 2024","l":"Oct 2024","ls":202410,"sr":3,"n":"Brandie.","w":[],"i":121},{"t":"Pest Control","v":"Natran Green Pest Control","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Dec 2025","l":"Dec 2025","ls":202512,"sr":3,"n":"Joe Lavin: 'I like these guys.'","w":[{"who":"Joe Lavin","when":"12/5/25","q":"I like these guys https://get.natran.com/pest-control-austin/schedule-call-back?kw=natran%20green%20pest%20control&cpn=11852460401&campaignid=1185246040…","j":0}],"i":122},{"t":"Tree Service","v":"Neri Paz (sched. Marina Knight)","c":"737-703-4815","tel":"+17377034815","m":1,"r":1,"s":"Positive","f":"Nov 2024","l":"Nov 2024","ls":202411,"sr":3,"n":"Suzanne: 'have used Neri Paz and been pleased.'","w":[],"i":123},{"t":"Appliance Repair","v":"Oak Hill Appliance","c":"","tel":"","m":1,"r":1,"s":"Neutral","f":"Jun 2024","l":"Jun 2024","ls":202406,"sr":1,"n":"Rogene: 'used to All The time' but not recently.","w":[{"who":"Rogene Buhrdorf","when":"6/14/24","q":"Try oak hill appliance. Have t used them in awhile but used to All The time","j":0}],"i":124},{"t":"Carpet Cleaning","v":"Oxyfresh","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Sep 2024","l":"Sep 2024","ls":202409,"sr":3,"n":"Neil/Sasha Pavlic - their actual current provider.","w":[],"i":125},{"t":"Fencing","v":"Patriot Fence","c":"","tel":"","m":1,"r":1,"s":"Negative","f":"Jan 2026","l":"Jan 2026","ls":202601,"sr":0,"n":"Micah: '12 month waiting list. Yikes!'","w":[{"who":"Micah","when":"1/29/26","q":"Does anyone recommend a fence company that doesn’t have a crazy long waiting list? Patriot Fence has a 12 month waiting list. Yikes!","j":0}],"i":126},{"t":"Small Engine Repair","v":"Paul Bederman","c":"+1 (512) 585-6862","tel":"+15125856862","m":1,"r":1,"s":"Positive","f":"Jun 2026","l":"Jun 2026","ls":202606,"sr":3,"n":"Scott Jensen: tractors, generators, go-karts. 'Does a great job and is reasonable... Detailed invoices.' Semi-retired, availability varies.","w":[{"who":"Scott Jensen","when":"6/18/26","q":"Paul Bederman +1 (512) 585-6862. Does a great job and is reasonable in his prices. Detailed invoices when finished. Sometimes he says he’s retired and c…","j":0}],"i":127},{"t":"Fencing","v":"Perimeter Fencing (Jason Stanford)","c":"1 (512) 922-5008","tel":"+15129225008","m":1,"r":1,"s":"Positive","f":"Jan 2026","l":"Jan 2026","ls":202601,"sr":3,"n":"Craigo's referral when Micah hit a 12-month wait elsewhere.","w":[],"i":128},{"t":"Remodel & Construction","v":"Peterson Woodworks TX","c":"","tel":"","m":1,"r":1,"s":"Neutral","f":"Nov 2023","l":"Nov 2023","ls":202311,"sr":1,"n":"Brandie's cousin. 'No personal experience but their work looks nice.'","w":[],"i":129},{"t":"Pool","v":"Pool Scouts of Austin","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Aug 2024","l":"Aug 2024","ls":202408,"sr":3,"n":"Dustin: 'super pleased with them.'","w":[{"who":"Dustin","when":"8/23/24","q":"I’ve been using Pool Scouts of Austin and super pleased with them","j":0}],"i":130},{"t":"Plumbing","v":"Radiant Plumbing","c":"","tel":"","m":1,"r":1,"s":"Negative","f":"Sep 2025","l":"Sep 2025","ls":202509,"sr":0,"n":"Susan Thiel: wanted to tear open walls and ceiling to find a gas leak. She sought a less invasive option.","w":[{"who":"Susan Thiel","when":"9/11/25","q":"Need recommendation for a plumber who does gas leak detective experience? We may have a propane leak in our house. Radiant Plumbing wants to tear open o…","j":0}],"i":131},{"t":"Tree Service","v":"Rick","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Apr 2025","l":"Apr 2025","ls":202504,"sr":3,"n":"Lia Ulbrich: 'Great prices, professional and cleaned up everything. Will definitely use him again.'","w":[{"who":"Lia Ulbrich","when":"4/25/25","q":"Just had a great experience with Rick. He did tree trimming for us. Great prices, professional and cleaned up everything. Will definitely use him again.…","j":0}],"i":132},{"t":"Roofing","v":"Rosendo Roof","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Jun 2026","l":"Jun 2026","ls":202606,"sr":3,"n":"Kristina: 'I've used Rosendo quite a few times.'","w":[],"i":133},{"t":"Landscape & Irrigation","v":"Rubio Merino","c":"512.317.6348","tel":"+15123176348","m":1,"r":1,"s":"Strongly positive","f":"Jun 2024","l":"Jun 2024","ls":202406,"sr":4,"n":"Rogene (works in real estate): 'He's worked for many of my clients for years. He's wonderful.'","w":[],"i":134},{"t":"Remodel & Construction","v":"Selva Construction (Luis Rodriguez / Raul Cervantes)","c":"737-484-6454 / 512-998-7889","tel":"+17374846454","m":1,"r":1,"s":"Positive","f":"Jun 2023","l":"Jun 2023","ls":202306,"sr":3,"n":"Ryan Z: concrete slab work.","w":[],"i":135},{"t":"Tree Service","v":"Sid Morning / Morning Tree Service","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Jan 2024","l":"Jan 2024","ls":202401,"sr":3,"n":"Susan Phillips: used several times, 'they are really good.'","w":[{"who":"Susan Phillips","when":"1/11/24","q":"We’ve used Sid morning several times. They are really good. It might be called morning tree service now or something like that.","j":0}],"i":136},{"t":"Carpet Cleaning","v":"Sleep Number mattress cleaning","c":"","tel":"","m":1,"r":1,"s":"Neutral","f":"Jan 2026","l":"Jan 2026","ls":202601,"sr":1,"n":"Susan Thiel asked; no answers came back. Open question in the group.","w":[],"i":137},{"t":"Remodel & Construction","v":"Smith Structural (Whit Smith)","c":"whit@smithstructural.com","tel":"","m":1,"r":1,"s":"Positive","f":"Oct 2023","l":"Oct 2023","ls":202310,"sr":3,"n":"Susan McFarland - structural engineer for load-bearing wall removal.","w":[],"i":138},{"t":"Septic","v":"Snowden OnSite","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Dec 2023","l":"Dec 2023","ls":202312,"sr":3,"n":"Cynthia Miller: 'has been great for us for years,' aerator system.","w":[],"i":139},{"t":"Plumbing","v":"Stan's Heating, Air, Plumbing & Electrical","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Nov 2024","l":"Nov 2024","ls":202411,"sr":3,"n":"Mary Jo Wood: came out after hours for an emergency, interrupted another job.","w":[],"i":140},{"t":"Roofing","v":"Streamline Roofing (Sergio)","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Jan 2026","l":"Jan 2026","ls":202601,"sr":3,"n":"Rogene: 2 family homes + 3 client homes in 2 years. 'Affordable and attentive.'","w":[],"i":141},{"t":"Septic","v":"Synergy On-site Septic Solutions","c":"512-481-8196","tel":"+15124818196","m":1,"r":1,"s":"Positive","f":"Jul 2023","l":"Jul 2023","ls":202307,"sr":3,"n":"Ryan Z: 'That's who we use.'","w":[{"who":"Ryan Z","when":"7/14/23","q":"Synergy On-site Septic Solutions 512-481-8196 That’s who we use.","j":0},{"who":"Priya R","when":"5/11/26","q":"Connie: I have used Synergy for a pump replacement 2y ago:","j":0},{"who":"Dean Dzurilla","when":"7/14/23","q":"They do shitty work","j":1}],"i":142},{"t":"Glass & Windows","v":"The Glass Guru","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Jun 2024","l":"Jun 2024","ls":202406,"sr":3,"n":"Rogene: 'I use them too.' Ace Discount referred Shelby here.","w":[],"i":143},{"t":"Pressure Washing","v":"Thuro Clean Power Washing (Erich Specht)","c":"+1 (512) 680-6842","tel":"+15126806842","m":1,"r":1,"s":"Strongly positive","f":"May 2024","l":"May 2024","ls":202405,"sr":4,"n":"Susan Thiel: 'used Erich for years. He's always on time, professional, and does great work.' Pricing shared: $400 pergola spray+seal, $450 fence refurb, $200 back patio.","w":[{"who":"Susan Thiel","when":"5/24/24","q":"Erich Specht Thuro Clean Power Washing +1 (512) 680-6842 We have used Erich for years. He’s always on time, professional, and does great work.","j":0}],"i":144},{"t":"Electrical","v":"Tim Putnam","c":"+1 (512) 751-0340","tel":"+15127510340","m":1,"r":1,"s":"Positive","f":"Nov 2023","l":"Nov 2023","ls":202311,"sr":3,"n":"Susan McFarland.","w":[],"i":145},{"t":"Glass & Windows","v":"Total Glassworks (Caleb)","c":"512-517-5676","tel":"+15125175676","m":1,"r":1,"s":"Positive","f":"Jun 2024","l":"Jun 2024","ls":202406,"sr":3,"n":"Hector Elizondo.","w":[],"i":146},{"t":"Tree Service","v":"Tree Time (Alex)","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"May 2023","l":"May 2023","ls":202305,"sr":3,"n":"Brandie: 'got our trees done today for a very reasonable price.'","w":[{"who":"Brandie","when":"5/8/23","q":"We got our trees done today for a very reasonable price. If you are looking for a tree guy, we recommend Alex with Tree Time. <attached: 00001887-PHOTO-…","j":0}],"i":147},{"t":"Septic","v":"VSE Septic Services (Lakeway)","c":"512-261-4000","tel":"+15122614000","m":1,"r":1,"s":"Positive","f":"Feb 2026","l":"Feb 2026","ls":202602,"sr":3,"n":"Retta - pumping.","w":[{"who":"Retta","when":"2/22/26","q":"We used VSE Septic Services out of Lakeway. 512-261-4000","j":0}],"i":148},{"t":"Pest Control","v":"Vector 1 Pest Control","c":"","tel":"","m":1,"r":1,"s":"Positive","f":"Mar 2026","l":"Mar 2026","ls":202603,"sr":3,"n":"Lia Ulbrich: 'haven't had any issues.'","w":[{"who":"Lia Ulbrich","when":"3/27/26","q":"We use Vector 1 pest control and haven’t had any issues.","j":0}],"i":149},{"t":"Waste & Hauling","v":"Waste Connections","c":"","tel":"","m":1,"r":1,"s":"Neutral","f":"Aug 2023","l":"Jul 2026","ls":202607,"sr":1,"n":"The HOA-negotiated group-rate trash provider. Reliability complaints are occasional (late pickups shifting Lemon Fresh's schedule).","w":[],"i":150}];
+const TRADES = ["Appliance Repair", "Auto", "Bin Cleaning", "Carpet Cleaning", "Dryer Vent & Ducts", "Drywall", "Electrical", "Fencing", "Garage Doors", "Glass & Windows", "HVAC", "Handyman", "House Cleaning", "Internet", "Landscape & Irrigation", "Painting", "Pest Control", "Pet Services", "Plumbing", "Pool", "Pressure Washing", "Professional Services", "Propane", "Remodel & Construction", "Roofing", "Seasonal", "Septic", "Small Engine Repair", "Tree Service", "Waste & Hauling", "Window Cleaning"];
+const SEASON = {"by":{"Plumbing":[1,24,2,2,2,9,3,1,5,2,10,5],"Electrical":[4,11,0,4,0,4,0,0,3,5,3,1],"HVAC":[3,1,0,2,1,1,0,2,1,4,0,0],"Roofing":[8,17,2,3,3,3,0,2,11,7,0,0],"Propane":[3,38,0,0,1,2,6,0,1,7,1,6],"Septic":[4,7,1,1,7,7,4,0,0,4,0,8],"Handyman":[3,0,0,0,0,1,1,3,0,1,1,1],"Remodel & Construction":[5,18,10,9,6,5,1,6,2,5,8,4],"Pool":[3,19,4,2,3,3,3,18,5,2,2,3],"Landscape & Irrigation":[6,8,9,3,2,7,3,8,8,4,0,2],"Tree Service":[4,50,5,2,2,7,10,9,4,1,12,5],"Appliance Repair":[2,6,0,5,2,6,1,2,3,3,1,7],"Garage Doors":[4,2,0,0,0,0,0,0,4,0,1,2],"Window Cleaning":[0,0,0,0,1,4,2,2,1,0,0,0],"Glass & Windows":[0,0,0,1,0,0,0,0,0,0,0,0],"House Cleaning":[1,1,2,4,1,0,0,1,1,0,1,0],"Carpet Cleaning":[0,0,0,0,0,0,0,0,2,1,0,0],"Pest Control":[0,0,11,2,2,4,0,3,0,0,1,4],"Auto":[3,2,2,3,2,1,1,2,0,1,1,2],"Painting":[0,1,0,1,0,2,0,0,0,1,1,1],"Drywall":[0,0,0,2,0,0,0,2,0,0,3,0],"Dryer Vent & Ducts":[0,0,0,2,1,0,0,0,0,0,0,0],"Pressure Washing":[0,0,0,0,4,0,0,0,2,0,0,0],"Bin Cleaning":[0,0,0,0,0,0,0,0,0,0,0,0],"Fencing":[2,3,1,3,1,2,8,1,1,0,4,0],"Small Engine Repair":[0,7,0,0,0,3,0,0,0,0,0,3],"Pet Services":[1,0,1,0,2,0,1,0,1,0,0,0],"Professional Services":[0,0,0,0,1,0,0,0,1,0,0,0],"Waste & Hauling":[1,1,1,4,40,1,0,1,0,6,28,0],"Seasonal":[0,0,0,0,0,0,0,0,0,0,5,0],"Internet":[5,5,5,12,2,13,7,14,1,0,4,0]},"all":[558,1415,624,657,420,494,647,452,426,505,504,346],"combined":[63,221,56,67,86,85,51,77,57,54,87,54],"tot":{"Plumbing":66,"Electrical":35,"HVAC":15,"Roofing":56,"Propane":65,"Septic":43,"Handyman":11,"Remodel & Construction":79,"Pool":67,"Landscape & Irrigation":60,"Tree Service":111,"Appliance Repair":38,"Garage Doors":13,"Window Cleaning":10,"Glass & Windows":1,"House Cleaning":12,"Carpet Cleaning":3,"Pest Control":27,"Auto":20,"Painting":7,"Drywall":7,"Dryer Vent & Ducts":3,"Pressure Washing":6,"Bin Cleaning":0,"Fencing":26,"Small Engine Repair":13,"Pet Services":6,"Professional Services":2,"Waste & Hauling":83,"Seasonal":5,"Internet":68}};
+
+const $ = s => document.querySelector(s);
+const rowsEl = $('#rows'), qEl = $('#q'), tradeEl = $('#trade'),
+      sortEl = $('#sort'), countEl = $('#count'), clearEl = $('#clear'),
+      resetEl = $('#reset'), bdEl = $('#breakdown');
+
+TRADES.forEach(t => {
+  const o = document.createElement('option');
+  o.value = t; o.textContent = t; tradeEl.appendChild(o);
+});
+
+let sentFilter = new Set();
+let deanOn = false;
+const countMsgs = d => deanOn ? d.w.filter(h => !h.j).length : d.w.length;
+
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const rxEsc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+function hl(text, q){
+  const safe = esc(text);
+  if(!q) return safe;
+  return safe.replace(new RegExp('(' + rxEsc(esc(q)) + ')', 'gi'), '<mark>$1</mark>');
+}
+
+function sentClass(s){
+  if(s === 'Strongly positive') return 'sent-strongly';
+  if(s === 'Positive') return 'sent-positive';
+  if(s === 'Mixed') return 'sent-mixed';
+  if(s === 'Negative') return 'sent-negative';
+  return 'sent-neutral';
+}
+
+function contactHTML(item, q){
+  if(!item.c) return '<span class="contact">No contact posted</span>';
+  const shown = hl(item.c, q);
+  if(item.tel) return '<span class="contact"><a href="tel:' + item.tel + '">' + shown + '</a></span>';
+  return '<span class="contact">' + shown + '</span>';
+}
+
+const SENT_ORDER = ['Strongly positive','Positive','Mixed','Neutral','Negative'];
+const SENT_VAR = {
+  'Strongly positive':'var(--cedar)', 'Positive':'var(--tint-c)', 'Mixed':'var(--amber)',
+  'Neutral':'var(--slate)', 'Negative':'var(--rust)'
+};
+
+function breakdown(out){
+  if(!out.length){ bdEl.innerHTML=''; return; }
+  const tally = {};
+  out.forEach(d => tally[d.s] = (tally[d.s]||0) + 1);
+  const present = SENT_ORDER.filter(s => tally[s]);
+  const bar = present.map(s =>
+    '<span style="width:' + (tally[s]/out.length*100).toFixed(2) + '%;background:' + SENT_VAR[s] + '"></span>'
+  ).join('');
+  const key = present.map(s =>
+    '<span><i style="background:' + SENT_VAR[s] + '"></i><b>' + tally[s] + '</b> ' + s.toLowerCase() + '</span>'
+  ).join('');
+  bdEl.innerHTML = '<div class="bdbar">' + bar + '</div><div class="bdkey">' + key + '</div>';
+}
+
+function render(){
+  const q = qEl.value.trim();
+  const ql = q.toLowerCase();
+  const trade = tradeEl.value;
+  const key = sortEl.value;
+
+  let out = DATA.filter(d => {
+    if(trade && d.t !== trade) return false;
+    if(sentFilter.size && !sentFilter.has(d.s)) return false;
+    if(!ql) return true;
+    return (d.v + ' ' + d.t + ' ' + d.c + ' ' + d.n + ' ' + d.s).toLowerCase().includes(ql);
+  });
+
+  const cmp = {
+    r: (a,b) => b.r - a.r || b.m - a.m || a.v.localeCompare(b.v),
+    m: (a,b) => b.m - a.m || b.r - a.r || a.v.localeCompare(b.v),
+    l: (a,b) => b.ls - a.ls || b.r - a.r || a.v.localeCompare(b.v),
+    v: (a,b) => a.v.localeCompare(b.v),
+    t: (a,b) => a.t.localeCompare(b.t) || b.r - a.r || a.v.localeCompare(b.v)
+  }[key];
+  out.sort(cmp);
+
+  countEl.textContent = out.length === DATA.length
+    ? DATA.length + ' vendors'
+    : out.length + ' of ' + DATA.length + ' vendors';
+
+  const dirty = q || trade || sentFilter.size || deanOn;
+  clearEl.classList.toggle('on', !!q);
+  resetEl.classList.toggle('on', !!dirty);
+
+  breakdown(out);
+  if(typeof closePop === 'function') closePop();
+
+  if(!out.length){
+    rowsEl.innerHTML = '<div class="empty"><p>Nothing matches that yet.</p>' +
+      '<span>Try a broader word, or reset the filters to see all ' + DATA.length + ' vendors.</span></div>';
+    return;
+  }
+
+  rowsEl.innerHTML = out.map(d => {
+    const sc = sentClass(d.s);
+    const marks = Array.from({length: Math.min(d.r, 9)}, () => '<i></i>').join('');
+    const label = d.r === 1 ? '1 household' : d.r + ' households';
+    return '<article class="row">' +
+      '<div class="main">' +
+        '<span class="trade">' + hl(d.t, q) + '</span>' +
+        '<h2 class="name">' + hl(d.v, q) + '</h2>' +
+        contactHTML(d, q) +
+        '<p class="note">' + hl(d.n, q) + '</p>' +
+      '</div>' +
+      '<div class="meter">' +
+        '<div class="tally ' + sc + '" role="img" aria-label="' + label + '">' + marks + '</div>' +
+        '<button class="who" type="button" data-i="' + d.i + '" aria-expanded="false">' +
+          '<b>' + d.r + '</b> ' + (d.r === 1 ? 'household' : 'households') +
+          (countMsgs(d) ? '<span>&#9662;</span>' : '') + '</button>' +
+        '<span class="metric">' + d.m + ' mention' + (d.m === 1 ? '' : 's') + '</span>' +
+      '</div>' +
+      '<div class="aside">' +
+        '<span class="tag ' + sc + '">' + d.s + '</span>' +
+        '<span class="seen">' + (d.f === d.l ? d.l : d.f + ' &rarr; ' + d.l) + '</span>' +
+      '</div>' +
+    '</article>';
+  }).join('');
+}
+
+/* ---- who-said-it popover: hover on desktop, tap anywhere ---- */
+const popEl = $('#pop');
+let popBtn = null, hoverOK = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+
+function popHTML(d){
+  const all = d.w;
+  const shown = deanOn ? all.filter(h => !h.j) : all;
+  const hid = all.length - shown.length;
+  const note = (deanOn && hid)
+    ? '<p class="hiddennote">' + hid + ' quip' + (hid === 1 ? '' : 's') + ' hidden</p>' : '';
+  if(!shown.length && all.length){
+    return '<h3>' + esc(d.v) + '</h3>' +
+      '<p class="pmeta">' + d.r + (d.r === 1 ? ' household' : ' households') + '</p>' +
+      '<p class="pnone">Every message captured for this one was a quip. Turn off the Dean Filter to see them.</p>';
+  }
+  if(!d.w.length){
+    return '<h3>' + esc(d.v) + '</h3>' +
+      '<p class="pmeta">' + d.r + (d.r === 1 ? ' household' : ' households') + '</p>' +
+      '<p class="pnone">The names are folded into the summary for this one &mdash; the thread never quoted them separately.</p>';
+  }
+  const list = shown.map(h =>
+    '<li><div class="pwho"><span class="pname">' + esc(h.who) + '</span>' +
+    '<span class="pdate">' + esc(h.when) + '</span></div>' +
+    '<p class="pquote">' + esc(h.q) + '</p></li>'
+  ).join('');
+  return '<h3>' + esc(d.v) + '</h3>' +
+    '<p class="pmeta">' + shown.length + ' message' + (shown.length === 1 ? '' : 's') + ' on record</p>' +
+    '<ul>' + list + '</ul>' + note;
+}
+
+function placePop(btn){
+  const r = btn.getBoundingClientRect();
+  popEl.style.left = '0px'; popEl.style.top = '0px';
+  const pw = popEl.offsetWidth, ph = popEl.offsetHeight, pad = 12;
+  let left = r.left + r.width / 2 - pw / 2;
+  left = Math.max(pad, Math.min(left, window.innerWidth - pw - pad));
+  let top = r.bottom + 8;
+  if(top + ph > window.innerHeight - pad) top = Math.max(pad, r.top - ph - 8);
+  popEl.style.left = left + 'px';
+  popEl.style.top = top + 'px';
+}
+
+function openPop(btn){
+  const d = DATA[+btn.dataset.i];
+  if(!d) return;
+  if(popBtn && popBtn !== btn) popBtn.setAttribute('aria-expanded','false');
+  popEl.innerHTML = popHTML(d);
+  popEl.classList.add('on');
+  btn.setAttribute('aria-expanded','true');
+  popBtn = btn;
+  placePop(btn);
+}
+
+function closePop(){
+  popEl.classList.remove('on');
+  if(popBtn) popBtn.setAttribute('aria-expanded','false');
+  popBtn = null;
+}
+
+rowsEl.addEventListener('click', e => {
+  const btn = e.target.closest('.who');
+  if(!btn) return;
+  e.stopPropagation();
+  if(popBtn === btn) closePop(); else openPop(btn);
+});
+
+if(hoverOK){
+  let t;
+  rowsEl.addEventListener('mouseover', e => {
+    const btn = e.target.closest('.who');
+    if(!btn || btn === popBtn) return;
+    clearTimeout(t); t = setTimeout(() => openPop(btn), 90);
+  });
+  rowsEl.addEventListener('mouseout', e => {
+    if(!e.target.closest('.who')) return;
+    clearTimeout(t);
+    t = setTimeout(() => { if(!popEl.matches(':hover')) closePop(); }, 260);
+  });
+  popEl.addEventListener('mouseleave', closePop);
+}
+
+document.addEventListener('click', e => { if(!popEl.contains(e.target)) closePop(); });
+window.addEventListener('resize', () => { if(popBtn) placePop(popBtn); });
+window.addEventListener('scroll', () => { if(popBtn) placePop(popBtn); }, true);
+
+/* ---- seasonality histogram ---- */
+const MN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const barsEl = $('#bars'), monthsEl = $('#months'), ctitleEl = $('#ctitle'), cnoteEl = $('#cnote');
+let normMode = true;
+
+function series(trade){
+  const raw = (trade && SEASON.by[trade]) ? SEASON.by[trade] : SEASON.combined;
+  if(!normMode) return {vals: raw, unit: 'mentions'};
+  const n = raw.map((v, i) => SEASON.all[i] ? v / SEASON.all[i] * 1000 : 0);
+  return {vals: n, unit: 'per 1k msgs'};
+}
+
+function drawChart(){
+  const trade = tradeEl.value;
+  const {vals, unit} = series(trade);
+  const max = Math.max(...vals, 0.0001);
+  const total = (trade && SEASON.tot[trade] !== undefined) ? SEASON.tot[trade]
+              : SEASON.combined.reduce((a, b) => a + b, 0);
+  const peak = vals.indexOf(max);
+
+  ctitleEl.innerHTML = 'When the neighborhood talks about <em>' +
+    esc(trade || 'every trade') + '</em>';
+
+  barsEl.innerHTML = vals.map((v, i) => {
+    const h = (v / max * 100).toFixed(1);
+    const label = normMode ? v.toFixed(1) : v;
+    return '<div class="bcol' + (i === peak ? ' peak' : '') + '" ' +
+      'title="' + MN[i] + ': ' + label + ' ' + unit + '">' +
+      '<span class="bval">' + label + '</span>' +
+      '<div class="bfill" style="height:' + h + '%"></div></div>';
+  }).join('');
+
+  monthsEl.innerHTML = MN.map((m, i) =>
+    '<span class="' + (i === peak ? 'peak' : '') + '">' + m + '</span>').join('');
+
+  const feb = normMode ? '' :
+    ' February looks huge in raw counts because the Feb 2021 freeze produced 1,415 messages &mdash; a fifth of the whole archive. Switch to per-1,000 to see real seasonality.';
+  cnoteEl.innerHTML = total + ' message' + (total === 1 ? '' : 's') +
+    ' mentioning this' + (trade ? ' trade' : '') + ', pooled across 2020&ndash;2026. Peak: <b>' +
+    MN[peak] + '</b>.' + feb;
+}
+
+$('#mNorm').addEventListener('click', () => {
+  normMode = true;
+  $('#mNorm').setAttribute('aria-pressed','true');
+  $('#mRaw').setAttribute('aria-pressed','false');
+  drawChart();
+});
+$('#mRaw').addEventListener('click', () => {
+  normMode = false;
+  $('#mRaw').setAttribute('aria-pressed','true');
+  $('#mNorm').setAttribute('aria-pressed','false');
+  drawChart();
+});
+
+qEl.addEventListener('input', render);
+tradeEl.addEventListener('change', () => { drawChart(); render(); });
+sortEl.addEventListener('change', render);
+
+clearEl.addEventListener('click', () => { qEl.value = ''; qEl.focus(); render(); });
+
+resetEl.addEventListener('click', () => {
+  qEl.value = ''; tradeEl.value = ''; sentFilter.clear(); deanOn = false;
+  setTimeout(drawChart, 0);
+  document.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed','false'));
+  closePop();
+  render();
+});
+
+const deanEl = $('#deanfilter');
+deanEl.addEventListener('click', () => {
+  deanOn = !deanOn;
+  deanEl.setAttribute('aria-pressed', String(deanOn));
+  closePop();
+  render();
+});
+
+document.querySelectorAll('.chip[data-s]').forEach(chip => {
+  chip.addEventListener('click', () => {
+    const s = chip.dataset.s;
+    const on = chip.getAttribute('aria-pressed') === 'true';
+    if(on){ sentFilter.delete(s); chip.setAttribute('aria-pressed','false'); }
+    else { sentFilter.add(s); chip.setAttribute('aria-pressed','true'); }
+    render();
+  });
+});
+
+document.addEventListener('keydown', e => {
+  if(e.key === '/' && document.activeElement !== qEl){ e.preventDefault(); qEl.focus(); }
+  if(e.key === 'Escape'){
+    if(popBtn){ const b = popBtn; closePop(); b.focus(); return; }
+    if(document.activeElement === qEl){ qEl.value = ''; render(); }
+  }
+});
+
+drawChart();
+render();
+</script>
+</body>
+</html>
