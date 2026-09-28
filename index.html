@@ -294,64 +294,6 @@ footer{
   @keyframes grow{from{height:0 !important;opacity:0}}
   @keyframes rise{from{opacity:0;transform:translateY(5px)}}
 }
-
-/* ---------- e-bike saga ---------- */
-.sagalink{
-  display:inline-block;margin-top:14px;font-family:"JetBrains Mono",monospace;font-size:11.5px;
-  color:var(--amber);text-decoration:none;border-bottom:1px dashed var(--amber);padding-bottom:1px
-}
-.sagalink:hover{color:var(--ink);border-color:var(--ink)}
-.saga{margin:44px 0 0;padding-top:28px;border-top:1px solid var(--line);scroll-margin-top:12px}
-.saga h2{
-  font-family:"Bricolage Grotesque","Instrument Sans",sans-serif;font-weight:800;
-  font-size:clamp(24px,4.6vw,36px);line-height:1.05;letter-spacing:-.02em;color:var(--ink);margin:0 0 12px
-}
-.saga .lede{margin-bottom:16px}
-.sstats{
-  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0 0 22px
-}
-.sstat{background:var(--paper);border:1px solid var(--line-soft);border-radius:var(--r);padding:11px 13px}
-.sstat b{
-  display:block;font-family:"Bricolage Grotesque","Instrument Sans",sans-serif;font-weight:700;
-  font-size:22px;color:var(--ink);line-height:1.1;font-variant-numeric:tabular-nums
-}
-.sstat span{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--mute);letter-spacing:.03em}
-.tl{list-style:none;margin:0;padding:0 0 0 18px;border-left:2px solid var(--line)}
-.tl li{position:relative;margin:0 0 20px}
-.tl li::before{
-  content:"";position:absolute;left:-25px;top:6px;width:10px;height:10px;border-radius:50%;
-  background:var(--stone);border:2px solid var(--cedar)
-}
-.tl li.hot::before{border-color:var(--rust);background:var(--rust)}
-.tl .when{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
-.tl h3{
-  font-family:"Bricolage Grotesque","Instrument Sans",sans-serif;font-weight:700;font-size:17px;
-  color:var(--ink);margin:2px 0 6px;letter-spacing:-.01em
-}
-.tl p{margin:0 0 8px;max-width:68ch}
-.tl blockquote{
-  margin:8px 0;padding:8px 12px;border-left:3px solid var(--amber);background:var(--tint-a);
-  border-radius:0 8px 8px 0;font-size:14px;color:var(--ink);max-width:64ch
-}
-.tl blockquote cite{display:block;margin-top:4px;font-style:normal;font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--mute)}
-.sgrid{display:grid;grid-template-columns:1fr;gap:10px;margin:26px 0 0}
-.scard{background:var(--paper);border:1px solid var(--line-soft);border-radius:var(--r);padding:15px 16px}
-.scard h3{
-  font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--mute);margin:0 0 10px;font-weight:600
-}
-.scard ol,.scard ul{margin:0;padding-left:18px}
-.scard li{margin:0 0 6px;font-size:14px}
-.scard .src{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--mute);margin:10px 0 0}
-.camp{display:grid;grid-template-columns:1fr;gap:12px}
-.camp h4{font-size:13px;margin:0 0 4px;color:var(--ink)}
-.camp p{margin:0;font-size:14px}
-.snote{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--mute);margin:18px 0 0;line-height:1.6}
-@media(min-width:720px){
-  .sstats{grid-template-columns:repeat(4,minmax(0,1fr))}
-  .sgrid{grid-template-columns:1fr 1fr}
-  .camp{grid-template-columns:1fr 1fr}
-}
 </style>
 </head>
 <body>
@@ -368,10 +310,8 @@ footer{
     <span><b>7,231</b> messages</span>
     <span><b>Mar 2020 &ndash; Sep 2026</b></span>
   </div>
-  <a class="sagalink" href="#saga">Also inside: the 2026 e-bike saga &darr;</a>
 </header>
 
-<div class="dir">
 <div class="controls">
   <div class="searchrow">
     <div class="searchbox">
@@ -423,96 +363,6 @@ footer{
 
 <div class="breakdown" id="breakdown" aria-hidden="true"></div>
 <div class="rows" id="rows"></div>
-</div>
-
-<section class="saga" id="saga" aria-labelledby="sagatitle">
-  <p class="eyebrow">Off-topic, but it's the chat's biggest fight of 2026</p>
-  <h2 id="sagatitle">The e-bike saga</h2>
-  <p class="lede">Neighborhood kids, fast electric dirt bikes, ramps dug into the park, and a lot of opinions. This is the timeline as it played out in the group chat, where people landed, and the rules as they stand now.</p>
-
-  <div class="sstats">
-    <div class="sstat"><b>~40</b><span>messages</span></div>
-    <div class="sstat"><b>15+</b><span>neighbors weighed in</span></div>
-    <div class="sstat"><b>11 wks</b><span>Apr 12 &ndash; Jun 29, 2026</span></div>
-    <div class="sstat"><b>2</b><span>HOA board meetings</span></div>
-  </div>
-
-  <ol class="tl">
-    <li>
-      <span class="when">Apr 12</span>
-      <h3>The ramps</h3>
-      <p>Adam U flags kids digging bike ramps into the park's grass and landscaping, and asks parents to remind their kids. Jim S enjoys watching "boys being daring boys." Micah's worry: riders darting across LMR Drive to pick up speed for the dirt ramp. Rogene B: "At least they aren't in front of screens all day."</p>
-      <blockquote>Right on Jim, boys will be boys, and I'm all about that, but my message was about parents being parents ;)<cite>Adam U</cite></blockquote>
-    </li>
-    <li>
-      <span class="when">Apr 12</span>
-      <h3>The board steps in</h3>
-      <p>Scott J, a board member whose sons ride, reports the issue took "more time and attention than almost any other subject" in his four years on the board. For now the kids ride only on their own property and on roads, stay under 20 mph, ride single file, stay out of the culverts and repair the park jumps. The boys are invited to the next board meeting. They also said some adults had yelled at them, flipped them off, and in one case swerved a car toward them. Priya R: "The boys are always very polite and responsible."</p>
-    </li>
-    <li class="hot">
-      <span class="when">May 22</span>
-      <h3>Near miss on Young Lane</h3>
-      <p>Tyler reports a kid on a dirt bike shooting out onto Young Lane near the bridge. "Thankfully the Tesla slammed on the brakes." Scott J finds the rider and gives him the rules talk. KB: "sounds like mine... I will have 'the chat.'" Priya R also spots two kids speeding on 1826, and Scott points to Circle C: "There are 100 e-bikes in circle C though."</p>
-    </li>
-    <li>
-      <span class="when">Jun 7</span>
-      <h3>Pedals vs. no pedals</h3>
-      <p>Micah shares a video suggesting e-bikes without pedals need a license. It's the first sign the legal definition will matter.</p>
-    </li>
-    <li>
-      <span class="when">June</span>
-      <h3>The Buzz publishes guidelines</h3>
-      <p>The neighborhood newsletter lays out riding guidelines. Number 13: "No riding on LMR property at the front entrance, in our fields, or near the mail station."</p>
-    </li>
-    <li class="hot">
-      <span class="when">Jun 27</span>
-      <h3>Round two</h3>
-      <p>Micah reports new ramps, shovels and rakes leaning on a tree, and muddy paths where grass used to be, with photos and videos. He argues these aren't e-bikes under Texas law but electric motorcycles, needing a license, insurance and registration. Sarah G, a doctor, adds that ER physicians she knows see severe injuries in kids on these vehicles. Ideas pour in: Dustin suggests setting aside the rougher area behind the mailboxes, Rogene B wants some space kept for the kids near home, and Micah proposes a motocross track or a big backyard.</p>
-    </li>
-    <li class="hot">
-      <span class="when">Jun 27&ndash;29</span>
-      <h3>Tempers flare</h3>
-      <p>Jon calls out "the keyboard warriors" complaining about "a field that nobody even uses," and offers to help the boys build better ramps. Erick F accuses Micah of tearing down the jumps and taking the tools, and notes that 10- and 11-year-olds faced the HOA meeting in person. Micah says it wasn't him (the mowing crew may have moved the tools), points back to Guideline 13, and says he'll come to the next meeting. Sarah G asks everyone to keep it respectful and "agree to disagree" about the dirt.</p>
-      <blockquote>I was simply raising safety concerns over kids riding e-motos in areas where we drive cars... I would hope that as grown adults we can respectfully communicate.<cite>Sarah G</cite></blockquote>
-    </li>
-    <li>
-      <span class="when">Jul &ndash; Sep</span>
-      <h3>Quiet since</h3>
-      <p>The thread hasn't come back up in the chat through late September. Nothing new was posted about the park, the proposed riding area or the next meeting.</p>
-    </li>
-  </ol>
-
-  <div class="sgrid">
-    <div class="scard">
-      <h3>House rules, as posted</h3>
-      <ol>
-        <li>No more than 15 mph on neighborhood roads.</li>
-        <li>Roads are only for getting to a friend's house, not for riding around.</li>
-        <li>Stop and look both ways before entering the road from a yard.</li>
-        <li>No drainage gullies, culverts or other people's property without permission.</li>
-        <li>No riding at the front entrance, in the fields or near the mail station (Buzz Guideline 13).</li>
-        <li>No riding on 1826 without a parent.</li>
-      </ol>
-      <p class="src">From Scott J's posts (Apr 12, May 22) and the June Buzz.</p>
-    </div>
-    <div class="scard">
-      <h3>Where people landed</h3>
-      <div class="camp">
-        <div>
-          <h4>Safety &amp; park first</h4>
-          <p>These are motor vehicles, not bikes. Close calls with cars, injury risk, and the torn-up park. Adam U, Micah, Sarah G, Tyler.</p>
-        </div>
-        <div>
-          <h4>Kids being kids</h4>
-          <p>Good kids who follow rules once they know them. It's an out-of-the-way patch of field, and better than screens. Scott J, Erick F, Jon, Jim S, Priya R, Rogene B.</p>
-        </div>
-      </div>
-      <p class="src">Where most landed from their own posts. Several people argued both safety and "let them ride somewhere."</p>
-    </div>
-  </div>
-  <p class="snote">Summarized from the LMR group chat. Kids aren't named. Adults are shown as first name + last initial, same as the directory.</p>
-</section>
-
 
 <div id="pop" role="dialog" aria-label="Who recommended this"></div>
 
